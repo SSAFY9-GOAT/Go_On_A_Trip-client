@@ -1,5 +1,5 @@
 .DS_Store
-../../go_on_a_trip-client/node_modules
+node_modules
 /dist
 
 

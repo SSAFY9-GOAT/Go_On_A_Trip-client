@@ -1,4 +1,4 @@
-# go_on_a_trip-client
+# goat
 
 ## Project setup
 ```
