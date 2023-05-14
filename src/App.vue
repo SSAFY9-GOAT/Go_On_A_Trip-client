@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <nav>
+        <header-nav></header-nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
@@ -8,9 +9,13 @@
   </div>
 </template>
 
+<script setup>
+import HeaderNav from "@/components/common/HeaderNav.vue";
+</script>
+
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'GmarketSansMedium', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
