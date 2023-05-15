@@ -1,5 +1,6 @@
 <template>
     <div>
+        <router-view></router-view>
         <main class="p-3 mb-3 border-bottom container-sm">
             <div class="container-sm">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -16,7 +17,7 @@
                         </div>
                         <div class="col-auto">
                             <button type="submit" class="btn btn-secondary mb-3">검색</button>
-                            <button type="button" class="btn btn-primary mb-3" onclick="location.href='#'">글쓰기</button>
+                            <button type="button" class="btn btn-primary mb-3" v-on:click="moveWrite">글쓰기</button>
                         </div>
                     </form>
                 </div>
@@ -111,6 +112,9 @@ export default {
             })
     },
     methods: {
+        moveWrite() {
+            this.$router.push({name: 'boardwrite'}).catch(()=>{});
+        }
     }
 }
 </script>
