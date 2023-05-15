@@ -35,15 +35,16 @@ export default {
             axios({
                 url: API_URL,
                 method: "post",
-                data:{
-                    user
-                }
+                data:
+                    user,
+
             })
                 .then((res) => {
                     // res.data;
-                    console.log(res.data());
+                    console.log(res.data);
                     if(res.data){
                       const loginUser = res.data;
+                      this.user = loginUser;
                       localStorage.setItem("login-user",loginUser);
                       this.$router.push('/');
                     }

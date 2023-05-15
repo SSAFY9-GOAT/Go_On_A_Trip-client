@@ -64,6 +64,9 @@ props: {
       }
     },
   },
+    created() {
+
+    }
 };
 </script>
 

@@ -2,7 +2,7 @@
   <div>
       <div id="wrapper" class="text-center">
           <main class="form-signin w-100 m-auto">
-              <form id="login-form">
+              <div id="login-form">
                   <img class="mb-4" src="@/assets/img/logo/logo_1x1.png" alt="" width="280" height="280"/>
                   <h1 class="h3 mb-3 fw-normal">로그인</h1>
 
@@ -32,7 +32,7 @@
                   <div class="checkbox mb-3">
                       <label> <input type="checkbox" value="remember-me"/> Remember me </label>
                   </div>
-                  <button id="btn-login" class="w-100 mb-3 btn btn-lg btn-primary"
+                  <button id="btn-login" class="w-100 mb-3 btn btn-lg btn-primary" type="button"
                           @click="login">로그인
                   </button>
                   <!-- <img src="@/assets/img/NaverLoginBtn.png" @click="naverLogin" class="w-100 mb-3"> -->
@@ -53,7 +53,7 @@
                       비밀번호 찾기
                   </button>
 
-              </form>
+              </div>
               <div class="pt-3">
                   <router-link to="/regist" class="register">
                       아직 계정이 없으신가요?<br/>계정 만들기
