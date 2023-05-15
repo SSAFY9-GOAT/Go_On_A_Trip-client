@@ -11,7 +11,7 @@
                     <a href="${root}/attraction/search" class="nav-link px-3 link-dark">관광지조회</a>
                 </li>
                 <li class="nav-item">
-                    <a href="${root}/article/list" class="nav-link px-3 link-dark">자유게시판</a>
+                    <router-link to="/articles" class="nav-link px-3 link-dark">자유게시판</router-link>
                 </li>
                 <li class="nav-item">
                     <a href="${root}/hotPlace/list" class="nav-link px-3 link-dark">핫플레이스</a>
