@@ -47,23 +47,23 @@
 <script>
 export default {
     name: "HeaderNav",
-props: {
-    user: null,
-  },
-  methods: {
-    logout() {
-      this.$emit("logout");
+    props: {
+        user: null,
     },
-  },
-  computed: {
-    getUser() {
-      if (this.user) {
-        return true;
-      } else {
-        return false;
-      }
+    methods: {
+        logout() {
+            this.$emit("logout");
+        },
     },
-  },
+    computed: {
+        getUser() {
+            if (this.user) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+    },
     created() {
 
     }

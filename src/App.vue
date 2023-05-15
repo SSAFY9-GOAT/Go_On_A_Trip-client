@@ -2,8 +2,6 @@
   <div id="app">
     <nav>
         <header-nav :user="user"></header-nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
     </nav>
     <router-view @login="login"/>
   </div>
