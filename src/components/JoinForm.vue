@@ -17,8 +17,11 @@
                     <label>비밀번호</label>
                     <p>영문, 숫자, 특수문자 8~20자</p>
                 </div>
-                <input v-model="password" type="password" name="loginPw" maxlength="20" placeholder="비밀번호" required>
-                <div class="caution"></div>
+                <input v-model="password" type="password" name="loginPw" maxlength="20" placeholder="비밀번호" @keyup="chkPW" required>
+                <p class="h1 mb-2">Icon <b-icon icon="exclamation-circle-fill"></b-icon></p>
+                <template >
+                    <b-icon icon="exclamation-triangle" scale="2" variant="warning"></b-icon>
+                </template>
                 <input v-model="passwordCheck" type="password" name="checkLoginPw" maxlength="20" placeholder="비밀번호 확인"
                        required>
                 <div class="caution"></div>
