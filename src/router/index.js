@@ -43,9 +43,9 @@ const routes = [
                 component: () => import('@/components/member/UserInfo.vue')
             },
             {
-                path: "modifyNickname",
-                name:'modifyNickname',
-                component: () => import('@/components/member/ModifyNickname.vue')
+                path: "modify",
+                name:'modify',
+                component: () => import('@/components/member/ModifyUser.vue')
             }
         ]
     }

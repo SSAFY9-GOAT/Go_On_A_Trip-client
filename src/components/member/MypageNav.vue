@@ -70,15 +70,15 @@
 <!--                      </a>-->
 <!--                  </li>-->
                   <li class="nav-item">
-                      <router-link to="/mypage/modifyNickname" v-if="this.$store.state.myPageState === 'modify-nickname'" class="nav-link active" aria-current="page" >
+                      <router-link to="/mypage/modify" v-if="this.$store.state.myPageState === 'modify'" class="nav-link active" aria-current="page" >
                           <span data-feather="home" class="align-text-bottom"></span>
                           <i class="bi bi-person"></i>
-                          별명 변경
+                          정보 변경
                       </router-link>
-                      <router-link to="/mypage/modifyNickname" v-else class="nav-link " aria-current="page" >
+                      <router-link to="/mypage/modify" v-else class="nav-link " aria-current="page" >
                           <span data-feather="home" class="align-text-bottom"></span>
                           <i class="bi bi-person"></i>
-                          별명 변경
+                          정보 변경
                       </router-link>
 <!--                      <c:if test="${currShow eq 'modifyNickname'}">-->
 <!--                          <a class="nav-link active" aria-current="page" href="">-->
@@ -92,17 +92,17 @@
 <!--                      별명 변경-->
 <!--                      </a>-->
                   </li>
-                  <li class="nav-item">
-                      <router-link to="/mypage" v-if="this.$store.state.myPageState === 'modify-email'" class="nav-link active" aria-current="page" >
-                          <span data-feather="home" class="align-text-bottom"></span>
-                          <i class="bi bi-person"></i>
-                          이메일 변경
-                      </router-link>
-                      <router-link to="/mypage" v-else class="nav-link " aria-current="page" >
-                          <span data-feather="home" class="align-text-bottom"></span>
-                          <i class="bi bi-person"></i>
-                          이메일 변경
-                      </router-link>
+<!--                  <li class="nav-item">-->
+<!--                      <router-link to="/mypage" v-if="this.$store.state.myPageState === 'modify-email'" class="nav-link active" aria-current="page" >-->
+<!--                          <span data-feather="home" class="align-text-bottom"></span>-->
+<!--                          <i class="bi bi-person"></i>-->
+<!--                          이메일 변경-->
+<!--                      </router-link>-->
+<!--                      <router-link to="/mypage" v-else class="nav-link " aria-current="page" >-->
+<!--                          <span data-feather="home" class="align-text-bottom"></span>-->
+<!--                          <i class="bi bi-person"></i>-->
+<!--                          이메일 변경-->
+<!--                      </router-link>-->
 
 
 <!--                      <c:if test="${currShow eq 'modifyEmail'}">-->
@@ -116,32 +116,19 @@
 <!--                      <i class="bi bi-person"></i>-->
 <!--                      이메일 변경-->
 <!--                      </a>-->
-                  </li>
-                  <li class="nav-item">
-                      <router-link to="/mypage" v-if="this.$store.state.myPageState === 'modify-phone'" class="nav-link active" aria-current="page" >
-                          <span data-feather="home" class="align-text-bottom"></span>
-                          <i class="bi bi-person"></i>
-                          전화번호 변경
-                      </router-link>
-                      <router-link to="/mypage" v-else class="nav-link " aria-current="page" >
-                          <span data-feather="home" class="align-text-bottom"></span>
-                          <i class="bi bi-person"></i>
-                          전화번호 변경
-                      </router-link>
-
-
-<!--                      <c:if test="${currShow eq 'modifyTel'}">-->
-<!--                          <a class="nav-link active" aria-current="page" href="">-->
-<!--                      </c:if>-->
-<!--                      <c:if test="${currShow != 'modifyTel'}">-->
-<!--                          <a class="nav-link " aria-current="page"-->
-<!--                             href="${root}/modifytel">-->
-<!--                      </c:if>-->
-<!--                      <span data-feather="home" class="align-text-bottom"></span>-->
-<!--                      <i class="bi bi-person"></i>-->
-<!--                      전화번호 변경-->
-<!--                      </a>-->
-                  </li>
+<!--                  </li>-->
+<!--                  <li class="nav-item">-->
+<!--                      <router-link to="/mypage" v-if="this.$store.state.myPageState === 'modify-phone'" class="nav-link active" aria-current="page" >-->
+<!--                          <span data-feather="home" class="align-text-bottom"></span>-->
+<!--                          <i class="bi bi-person"></i>-->
+<!--                          전화번호 변경-->
+<!--                      </router-link>-->
+<!--                      <router-link to="/mypage" v-else class="nav-link " aria-current="page" >-->
+<!--                          <span data-feather="home" class="align-text-bottom"></span>-->
+<!--                          <i class="bi bi-person"></i>-->
+<!--                          전화번호 변경-->
+<!--                      </router-link>-->
+<!--                  </li>-->
 
                   <li class="nav-item mt-5">
                       <router-link to="/withdrawal" class="nav-link text-danger"  >
