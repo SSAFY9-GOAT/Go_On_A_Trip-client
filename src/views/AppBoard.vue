@@ -1,119 +1,58 @@
 <template>
     <div>
-        <router-view></router-view>
-        <main class="p-3 mb-3 border-bottom container-sm">
-            <div class="container-sm">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <form class="row g-3" method="get" action="${root}/article/list">
-                        <input type="hidden" name="action" value="list">
-                        <div class="col-auto">
-                            <input type="text" class="form-control" id="condition" name="condition" placeholder="작성자, 제목, 내용">
-                        </div>
-                        <div class="col-auto">
-                            <select class="form-select" name="sortCondition">
-                                <option value="1" selected>최신등록순</option>
-                                <option value="2">보기순</option>
-                            </select>
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-secondary mb-3">검색</button>
-                            <button type="button" class="btn btn-primary mb-3" v-on:click="moveWrite">글쓰기</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-start ">
-                    <table class="table m-auto wrapper">
-                        <thead>
-                        <tr>
-                            <th scope="col" class=' text-center'>번호</th>
-                            <th scope="col" class=' text-center'>제목</th>
-                            <th scope="col" class=' text-center'>작성자</th>
-                            <th scope="col" class=' text-center'>조회수</th>
-                            <th scope="col" class=' text-center'>등록일</th>
-                        </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                        <tr v-for="article in articleList" :key="article.articleId">
-                            <td>{{article.articleId}}</td>
-                            <td>{{article.title}}</td>
-                            <td>{{article.nickname}}</td>
-                            <td>{{article.hit}}</td>
-                            <td>{{article.createdDate}}</td>
-                        </tr>
-<!--                        <c:forEach items="${articles}" var="article" varStatus="status">-->
-<!--                            <tr>-->
-<!--                                <th scope="row" class='text-center'>${status.count}</th>-->
-<!--                                <td><a class='linkToNotion' href='${root}/article/detail/${article.articleId}'>${article.title}</a></td>-->
-<!--                                <td class='text-center'>${article.createdDate}</td>-->
-<!--                            </tr>-->
-<!--                        </c:forEach>-->
-                        </tbody>
-                    </table>
-                </div>
-
-<!--                페이징 시작-->
-                <div class="d-flex justify-content-center mt-3">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-<!--&lt;!&ndash;                            이전버튼시작&ndash;&gt;-->
-<!--                            <c:if test="${page.prev}">-->
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link"-->
-<!--                                       href="${root}/article/list?pageNum=${page.startPage-1}&amount=${page.amount}">이전</a>-->
-<!--                                </li>-->
-<!--                            </c:if>-->
-<!--&lt;!&ndash;                            이전버튼종료&ndash;&gt;-->
-<!--&lt;!&ndash;                            페이징번호 처리시작&ndash;&gt;-->
-<!--                            <c:forEach var="num" begin="${page.startPage}" end="${page.endPage}">-->
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link" href="${root}/article/list?pageNum=${num}&amount=${page.amount}">${num}</a>-->
-<!--                                </li>-->
-<!--                            </c:forEach>-->
-<!--&lt;!&ndash;                            페이징번호 처리종료&ndash;&gt;-->
-<!--&lt;!&ndash;                            시작버튼시작&ndash;&gt;-->
-<!--                            <c:if test="${page.next}">-->
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link"-->
-<!--                                       href="${root}/article/list?pageNum=${page.endPage + 1}&amount=${page.amount}">다음</a>-->
-<!--                                </li>-->
-<!--                            </c:if>-->
-<!--&lt;!&ndash;                            시작버튼종료&ndash;&gt;-->
-                        </ul>
-                    </nav>
-                </div>
-<!--                페이징 종료-->
-            </div>
-        </main>
+        <router-view @write="write" @modify="modify"></router-view>
     </div>
 </template>
 
 <script>
-// import axios from 'axios';
-
 import axios from "axios";
 
 export default {
-    name: 'AppBoard',
-    components: {},
+    name: "AppBoard",
     data() {
         return {
-            articleList: [],
-        }
-    },
-    created() {
-        const API_URL = `http://localhost:8080/articles`;
-        axios.get(API_URL)
-            .then(response => {
-                console.log(response.data.data.content);
-                this.articleList = response.data.data.content;
-            })
-            .catch(error => {
-                console.log(error);
-            })
+            article: null,
+        };
     },
     methods: {
-        moveWrite() {
-            this.$router.push({name: 'boardwrite'}).catch(()=>{});
+        write(article) {
+            const API_URL = `http://localhost:8080/articles/write`;
+            console.log(article);
+            axios({
+                url: API_URL,
+                method: "POST",
+                data:
+                article,
+                // withCredentials: true,
+                 // headers: {
+                 //     "Access-Control-Allow-Origin": "*",
+                 //     "Access-Control-Allow-Credentials": true,
+                 // }
+            }).then(() => {
+                this.$router.push('/articles/')
+            }).catch((err) => {
+                console.log(err);
+            });
+        },
+        modify(article) {
+            let articleId = article.articleId;
+            const API_URL = `http://localhost:8080/articles/"${articleId}"/modify`;
+            console.log(article);
+            axios({
+                url: API_URL,
+                method: "POST",
+                data:
+                article,
+                // withCredentials: true,
+                // headers: {
+                //     "Access-Control-Allow-Origin": "*",
+                //     "Access-Control-Allow-Credentials": true,
+                // }
+            }).then(() => {
+                this.$router.push(`/articles/"${articleId}"`)
+            }).catch((err) => {
+                console.log(err);
+            });
         }
     }
 }
