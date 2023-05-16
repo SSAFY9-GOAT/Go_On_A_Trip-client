@@ -17,11 +17,9 @@
                     <label>비밀번호</label>
                     <p>영문, 숫자, 특수문자 8~20자</p>
                 </div>
-                <input v-model="password" type="password" name="loginPw" maxlength="20" placeholder="비밀번호" @keyup="chkPW" required>
-                <p class="h1 mb-2">Icon <b-icon icon="exclamation-circle-fill"></b-icon></p>
-                <template >
-                    <b-icon icon="exclamation-triangle" scale="2" variant="warning"></b-icon>
-                </template>
+                <input v-model="password" type="password" name="loginPw" maxlength="20" placeholder="비밀번호"
+                       @keyup="chkPW" required>
+<!--                <b-icon icon="exclamation-triangle" scale="2" variant="warning"></b-icon>-->
                 <input v-model="passwordCheck" type="password" name="checkLoginPw" maxlength="20" placeholder="비밀번호 확인"
                        required>
                 <div class="caution"></div>
@@ -56,7 +54,7 @@
                     <label>휴대폰번호</label>
                     <p>아이디/비밀번호 찾기에 필요</p>
                 </div>
-                <input v-model="phone" type="text" name="phone" placeholder="휴대폰번호 (숫자만 입력)"
+                <input v-model="phone" type="text" name="phone" maxlength="13" placeholder="휴대폰번호 (숫자만 입력)"
                        autocomplete="off" @keyup="getPhoneMask(phone)" required>
                 <div class="caution"></div>
             </div>
@@ -89,7 +87,7 @@
                 </b-row>
             </div>
 
-            <b-button type="button" variant="info" class="p-2 mt-3 ">회원가입</b-button>
+            <b-button type="button" variant="info" class="p-2 mt-3" @click="join">회원가입</b-button>
         </div>
     </div>
 </template>
@@ -112,9 +110,9 @@ export default {
                 {text: '남성', value: 'M'},
                 {text: '여성', value: 'F'}
             ],
-            check:{
-                id : false,
-                pwlen:false,
+            check: {
+                id: false,
+                pwlen: false,
             }
         }
     },
@@ -124,30 +122,43 @@ export default {
         }
     },
     methods: {
-        idCheck(){
+        join(){
+            let userInfo ={
+                loginId :this.id,
+                loginPw: this.password,
+                userName:this.name,
+                email:this.email,
+                phone:this.phone,
+                birth:this.birth.substring(5,10).replace("-",""),
+                birthyear:this.birth.substring(0,4),
+                gender:this.gender,
+                nickname:this.nickName,
+            };
+            this.$emit("join", userInfo);
+        },
+        idCheck() {
             this.check.id = this.id.length >= 8 && this.id.length <= 20;
         },
-        chkPW(){
+        chkPW() {
 
             var pw = this.password;
             var num = pw.search(/[0-9]/g);
             var eng = pw.search(/[a-z]/ig);
             var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-            if(pw.length < 8 || pw.length > 20){
+            if (pw.length < 8 || pw.length > 20) {
 
-                this.check.pwlen=false
+                this.check.pwlen = false
                 // return false;
             }
-            if(pw.search(/\s/) != -1){
-                alert("비밀번호는 공백 없이 입력해주세요.");
+            if (pw.search(/\s/) != -1) {
+                // alert("비밀번호는 공백 없이 입력해주세요.");
                 return false;
             }
-            if(num < 0 || eng < 0 || spe < 0 ){
-                alert("영문, 숫자, 특수문자를 혼합하여 입력해주세요.");
+            if (num < 0 || eng < 0 || spe < 0) {
+                // alert("영문, 숫자, 특수문자를 혼합하여 입력해주세요.");
                 return false;
-            }
-            else {
+            } else {
                 console.log("통과");
                 return true;
             }
@@ -157,47 +168,37 @@ export default {
             const now = new Date()
             this.value = new Date(now.getFullYear(), now.getMonth(), now.getDate())
         },
-        getPhoneMask(val){
+        getPhoneMask(val) {
             this.phone = this.getMask(val)
         },
-        getMask( phoneNumber ) {
-            if(!phoneNumber) return phoneNumber
+        getMask(phoneNumber) {
+            if (!phoneNumber) return phoneNumber
             phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
 
             let res = ''
-            if(phoneNumber.length < 3) {
+            if (phoneNumber.length < 3) {
                 res = phoneNumber
-            }
-            else {
-                if(phoneNumber.substr(0, 2) =='02') {
+            } else {
+                if (phoneNumber.substr(0, 2) == '02') {
 
-                    if(phoneNumber.length <= 5) {//02-123-5678
+                    if (phoneNumber.length <= 5) {//02-123-5678
                         res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 3)
-                    }
-                    else if(phoneNumber.length > 5 && phoneNumber.length <= 9) {//02-123-5678
+                    } else if (phoneNumber.length > 5 && phoneNumber.length <= 9) {//02-123-5678
                         res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 3) + '-' + phoneNumber.substr(5)
-                    }
-                    else if(phoneNumber.length > 9) {//02-1234-5678
+                    } else if (phoneNumber.length > 9) {//02-1234-5678
                         res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 4) + '-' + phoneNumber.substr(6)
                     }
 
                 } else {
-                    if(phoneNumber.length < 8) {
+                    if (phoneNumber.length < 8) {
                         res = phoneNumber
-                    }
-                    else if(phoneNumber.length == 8)
-                    {
+                    } else if (phoneNumber.length == 8) {
                         res = phoneNumber.substr(0, 4) + '-' + phoneNumber.substr(4)
-                    }
-                    else if(phoneNumber.length == 9)
-                    {
+                    } else if (phoneNumber.length == 9) {
                         res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 3) + '-' + phoneNumber.substr(6)
-                    }
-                    else if(phoneNumber.length == 10)
-                    {
+                    } else if (phoneNumber.length == 10) {
                         res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 3) + '-' + phoneNumber.substr(6)
-                    }
-                    else if(phoneNumber.length > 10) { //010-1234-5678
+                    } else if (phoneNumber.length > 10) { //010-1234-5678
                         res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 4) + '-' + phoneNumber.substr(7)
                     }
                 }
