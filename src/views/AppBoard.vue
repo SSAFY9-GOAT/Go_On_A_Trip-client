@@ -17,19 +17,20 @@ export default {
     methods: {
         write(article) {
             const API_URL = `http://localhost:8080/articles/write`;
-            console.log(article);
+            console.log(this.$store.state.loginUser.id);
             axios({
                 url: API_URL,
                 method: "POST",
-                data:
-                article,
-                // withCredentials: true,
-                 // headers: {
-                 //     "Access-Control-Allow-Origin": "*",
-                 //     "Access-Control-Allow-Credentials": true,
-                 // }
-            }).then(() => {
-                this.$router.push('/articles/')
+                data:{
+                    title: article.title,
+                    content: article.content,
+                },
+                params:{
+                    loginUserId: this.$store.state.loginUser.id,
+                }
+            }).then((res) => {
+                console.log(res);
+                this.$router.push(`/articles`)
             }).catch((err) => {
                 console.log(err);
             });
@@ -43,11 +44,6 @@ export default {
                 method: "POST",
                 data:
                 article,
-                // withCredentials: true,
-                // headers: {
-                //     "Access-Control-Allow-Origin": "*",
-                //     "Access-Control-Allow-Credentials": true,
-                // }
             }).then(() => {
                 this.$router.push(`/articles/"${articleId}"`)
             }).catch((err) => {

@@ -36,7 +36,7 @@
         </form>
         <div class='m-5 m-auto p-lg-5 container-sm justify-content-center align-content-center'>
             <div class='row justify-content-end'>
-                <a href='${root}/list' type='button' class=' col-1 btn btn-outline-info'>목록으로</a>
+                <router-link :to="{name: 'boardlist'}" class='col-1 btn btn-outline-info'>목록으로</router-link>
             </div>
         </div>
     </div>
