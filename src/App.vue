@@ -43,6 +43,7 @@ export default {
                     const loginUser = res.data;
                     this.user = loginUser;
                     localStorage.setItem("login-user", loginUser);
+                    this.$store.state.loginUser=loginUser;
                     this.$router.push('/');
                 }
             }).catch((err) => {
