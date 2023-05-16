@@ -1,6 +1,6 @@
 <template>
-  <div>
-      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+  <b-col class="col-3 ms-5">
+      <nav id="sidebarMenu" class=" d-md-block bg-light sidebar collapse">
           <div class="position-sticky pt-3 sidebar-sticky">
               <ul class="nav flex-column">
                   <li class="nav-item">
@@ -70,12 +70,12 @@
 <!--                      </a>-->
 <!--                  </li>-->
                   <li class="nav-item">
-                      <router-link to="/mypage" v-if="this.$store.state.myPageState === 'modify-nickname'" class="nav-link active" aria-current="page" >
+                      <router-link to="/mypage/modifyNickname" v-if="this.$store.state.myPageState === 'modify-nickname'" class="nav-link active" aria-current="page" >
                           <span data-feather="home" class="align-text-bottom"></span>
                           <i class="bi bi-person"></i>
                           별명 변경
                       </router-link>
-                      <router-link to="/mypage" v-else class="nav-link " aria-current="page" >
+                      <router-link to="/mypage/modifyNickname" v-else class="nav-link " aria-current="page" >
                           <span data-feather="home" class="align-text-bottom"></span>
                           <i class="bi bi-person"></i>
                           별명 변경
@@ -156,7 +156,7 @@
               </ul>
           </div>
       </nav>
-  </div>
+  </b-col>
 </template>
 
 <script>
