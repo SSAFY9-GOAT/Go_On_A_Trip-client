@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import IndexView from "@/views/IndexView.vue";
+import BoardList from "@/components/board/BoardList.vue";
 import BoardWrite from "@/components/board/BoardWrite.vue";
+import BoardView from "@/components/board/BoardView.vue";
+import BoardModify from "@/components/board/BoardModify.vue"
 
 Vue.use(VueRouter)
 
@@ -20,11 +23,29 @@ const routes = [
         path: '/articles',
         name: 'articles',
         component: () => import(/* webpackChunkName: "board" */ '@/views/AppBoard.vue'),
-        children: [{
-            path: 'write',
-            name: 'boardwrite',
-            component: BoardWrite,
-        }]
+        redirect: '/articles',
+        children: [
+            {
+                path: '',
+                name: 'boardlist',
+                component: BoardList,
+            },
+            {
+                path: 'write',
+                name: 'boardwrite',
+                component: BoardWrite,
+            },
+            {
+                path: ':articleId',
+                name: 'boardview',
+                component: BoardView,
+            },
+            {
+                path: ':articleId/modify',
+                name: 'boardmodify',
+                component: BoardModify,
+            },
+        ]
     },
 
     {
