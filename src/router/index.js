@@ -34,6 +34,11 @@ const routes = [
         path: '/regist',
         name: 'regist',
         component: () => import('@/components/JoinForm.vue')
+    },
+    {
+        path:'/mypage',
+        name: 'mypage',
+        component: () => import('@/views/AppMypage.vue')
     }
 ]
 
