@@ -31,7 +31,7 @@ export default {
                 url: API_URL,
                 method: "get",
                 data:
-                this.$store.state.loginUser.id,
+                this.$store.state.loginUser,
 
             }).then((res) => {
                 // res.data;
@@ -42,10 +42,12 @@ export default {
             }).catch((err) => {
                 console.log(err);
             });
-        }
+        },
     },
     created() {
         this.$store.state.myPageState = "my-info";
+        console.log("[마이페이지] 로그인 한 유저={}",this.$store.state.loginUser)
+        this.getUserInfo();
     }
 }
 
