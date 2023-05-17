@@ -1,20 +1,16 @@
 <template>
     <div>
         <div class="container">
-            <form class="row" onchange="getTourList()">
+            <form class="row" @change="getTourList()">
 <!--                <form class="row">-->
                 <div class="col-3">
                     <select class="form-select" aria-label="sidoCode" id="sidoCode" onchange="getSigunguCode(this.value)">
-<!--                        <c:forEach items="${sidos}" var="sido">-->
-<!--                            <option value="${sido.code}">${sido.name}</option>-->
-<!--                        </c:forEach>-->
+                        <option v-for="sido in sidos" :key="sido.code" :value="sido.code">{{sido.name}}</option>
                     </select>
                 </div>
                 <div class="col-3">
                     <select class="form-select" aria-label="gugunCode" id="gugunCode">
-<!--                        <c:forEach items="${guguns}" var="gugun">-->
-<!--                            <option value="${gugun.code}">${gugun.name}</option>-->
-<!--                        </c:forEach>-->
+                        <option v-for="gugun in guguns" :key="gugun.code" :value="gugun.code">{{gugun.name}}</option>
                     </select>
                 </div>
                 <div class="col-3">
@@ -90,12 +86,24 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "AttractionMap",
     data() {
         return {
             map: null,
+            overlays: [],
+            markers: [],
+            sidos: [],
+            guguns: [],
+            gugunCode: 1,
+            sidoCode: 1,
+            contentTypeId: 12,
         };
+    },
+    created() {
+
     },
     mounted() {
         if (window.kakao && window.kakao.maps) {
@@ -121,8 +129,90 @@ export default {
                 center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
                 level: 3 //지도의 레벨(확대, 축소 정도)
             };
+            // this.getTourList();
             this.map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+        },
+        getTourList() {
+            const API_URL = `http://localhost:8080/api/attraction/search`;
+            axios({
+                url: API_URL,
+                method: "GET",
+                data:{
+                    gugunCode: this.gugunCode,
+                    sidoCode: this.sidoCode,
+                    contentTypeId: this.contentTypeId,
+                },
+                params:{
+                }
+            }).then((res) => {
+                console.log(res);
+                // this.gugunCode = res.data.data
+                // this.sidoCode = res.data.data
+                // this.contentTypeId = res.data.data
+            }).catch((err) => {
+                console.log(err);
+            });
+        },
+        setCenter(response) {
+            // 이동할 위도 경도 위치를 생성합니다
+            let attraction = response[0];
+            var moveLatLon = new window.kakao.maps.LatLng(attraction.latitude, attraction.longitude);
+
+            // 지도 중심을 이동 시킵니다
+            this.map.setCenter(moveLatLon);
+        },
+        marker(response) {
+            let attractions = response;
+
+            var positions = [];
+            attractions.forEach(function (attraction) {
+                let data = {
+                    content: attraction.title,
+                    latlng: new window.kakao.maps.LatLng(attraction.latitude, attraction.longitude)
+                }
+                positions.push(data)
+            });
+
+            for (var i = 0; i < positions.length; i++) {
+
+                // 마커를 생성합니다
+                var marker = new window.kakao.maps.Marker({
+                    map: this.map, // 마커를 표시할 지도
+                    position: positions[i].latlng
+                });
+                this.markers.push(marker);
+
+                var content = '<div class="wrap">' +
+                    '    <div class="info">' +
+                    '        <div class="title">' +
+                    attractions[i].title +
+                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                    '        </div>' +
+                    '        <div class="body">' +
+                    '            <div class="img">' +
+                    '                <img src="' + attractions[i].firstImage + '" width="73" height="70">' +
+                    '           </div>' +
+                    '            <div class="desc">' +
+                    '                <div class="ellipsis">' + attractions[i].addr1 + '</div>' +
+                    '            </div>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</div>';
+
+                var overlay = new window.kakao.maps.CustomOverlay({
+                    content: content,
+                    map: this.map,
+                    position: positions[i].latlng
+                });
+
+                this.overlays.push(overlay);
+            }
+        },
+        closeOverlay() {
+            this.overlays[0].setMap(null);
         }
+
+
     }
 }
 </script>
