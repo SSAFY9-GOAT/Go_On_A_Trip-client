@@ -8,7 +8,7 @@
 
             <ul class="nav nav-pills col">
                 <li class="nav-item">
-                    <a href="${root}/attraction/search" class="nav-link px-3 link-dark">관광지조회</a>
+                    <router-link :to="{name: 'attraction'}" class="nav-link px-3 link-dark">관광지조회</router-link>
                 </li>
                 <li class="nav-item">
                     <router-link :to="{name: 'articles'}" class="nav-link px-3 link-dark">자유게시판</router-link>
