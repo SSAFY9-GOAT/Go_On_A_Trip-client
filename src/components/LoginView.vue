@@ -13,7 +13,7 @@
                               id="userId"
                               name="userId"
                               placeholder="userId"
-                              v-model="id"
+                              v-model="user.id"
                       />
                       <label for="userId">아이디</label>
                   </div>
@@ -24,7 +24,7 @@
                               id="userPassword"
                               name="userPassword"
                               placeholder="userPassword"
-                              v-model="password"
+                              v-model="user.password"
                       />
                       <label for="userPassword">비밀번호</label>
                   </div>
@@ -33,7 +33,7 @@
                       <label> <input type="checkbox" value="remember-me"/> Remember me </label>
                   </div>
                   <button id="btn-login" class="w-100 mb-3 btn btn-lg btn-primary" type="button"
-                          @click="login">로그인
+                          @click="confirm">로그인
                   </button>
                   <!-- <img src="@/assets/img/NaverLoginBtn.png" @click="naverLogin" class="w-100 mb-3"> -->
                   <button
@@ -65,23 +65,52 @@
 </template>
 
 <script>
+import {mapActions, mapState} from "vuex";
+import jwtDecode from "jwt-decode";
+// import memberStore from "@/store/modules/memberStore";
+
+const memberStore = "memberStore";
 export default {
     name: "LoginView",
     data(){
         return{
-            id:"",
-            password: "",
+            user: {
+                id: "",
+                password: "",
+            },
         };
     },
+    computed:{
+        ...mapState(memberStore,["isLogin", "isLoginError", "loginUer"]),
+    },
     methods: {
-        login() {
-            let user = {
-                id: this.id,
-                password: this.password,
-            };
-
-            this.$emit("login", user);
+        ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+        async confirm(){
+            await this.userConfirm(this.user);
+            let token = sessionStorage.getItem("access-token");
+            console.log("1. confirm() token >> " + token);
+            let decodeToken = jwtDecode(token);
+            console.log("2. getUserInfo() decodeToken :: ", decodeToken);
+            if (this.isLogin) {
+                // await this.getUserInfo(token);
+                this.userInfo =decodeToken.loginUser;
+                // console.log("33333333333333333333{}",memberStore.state.loginUser);
+                // commit("SET_USER_INFO", );
+                console.log("4. confirm() userInfo :: ", this.userInfo);
+                this.$router.push({ name: "index" });
+            }
         },
+        movePage() {
+            this.$router.push({ name: "join" });
+        },
+        // login() {
+        //     let user = {
+        //         id: this.id,
+        //         password: this.password,
+        //     };
+        //
+        //     this.$emit("login", user);
+        // },
     },
 }
 </script>
