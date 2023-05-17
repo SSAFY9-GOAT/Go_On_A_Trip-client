@@ -22,12 +22,13 @@
                 <li class="nav-item">
                     <a href="${root}/notion/list" class="nav-link px-3 link-dark">공지사항</a>
                 </li>
-                <template v-if="getUser">
+                <template v-if="loginUser">
                     <li class="nav-item">
                         <router-link to="/mypage" class="nav-link link-dark px-3">마이페이지</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/logout" class="nav-link link-dark px-3">로그아웃</router-link>
+<!--                        <router-link to="/logout" class="nav-link link-dark px-3">로그아웃</router-link>-->
+                        <span class="align-self-center link" @click.prevent="onClickLogout">로그아웃</span>
                     </li>
                 </template>
                 <template v-else>
@@ -45,23 +46,49 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from "vuex";
+// import memberStore from "@/store/modules/memberStore";
+
+const memberStore = "memberStore";
+
 export default {
     name: "HeaderNav",
-    props: {
-        user: null,
+    // props: {
+    //     user: null,
+    // },
+    // methods: {
+    //     logout() {
+    //         this.$emit("logout");
+    //     },
+    // },
+    computed: {
+        ...mapState(memberStore, ["isLogin", "loginUser"]),
+        ...mapGetters(["checkUserInfo"]),
+        // ...mapState(memberStore, ["isLogin", "isLoginError", "loginUer"]),
+        // getUser() {
+        //     console.log(this.isLogin)
+        //     if (this.isLogin) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // },
     },
     methods: {
-        logout() {
-            this.$emit("logout");
-        },
-    },
-    computed: {
-        getUser() {
-            if (this.user) {
-                return true;
-            } else {
-                return false;
-            }
+        ...mapActions(memberStore, ["userLogout"]),
+        onClickLogout() {
+            // this.SET_IS_LOGIN(false);
+            // this.SET_USER_INFO(null);
+            // sessionStorage.removeItem("access-token");
+            // if (this.$route.path != "/") this.$router.push({ name: "main" });
+            console.log(this.loginUser.loginId);
+            //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
+            //+ satate에 isLogin, userInfo 정보 변경)
+            // this.$store.dispatch("userLogout", this.userInfo.userid);
+            this.userLogout(this.loginUser.loginId);
+            sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
+            sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+            if (this.$route.path != "/") this.$router.push({ name: "main" });
         },
     },
     created() {

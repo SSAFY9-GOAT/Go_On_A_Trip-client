@@ -1,6 +1,6 @@
 // import jwtDecode from "jwt-decode";
 // import router from "@/router";
-import {login} from "@/api/member";
+import {login , logout } from "@/api/member";
 
 const memberStore = {
     namespaced: true,
@@ -38,7 +38,6 @@ const memberStore = {
             await login(
                 user,
                 ({ data }) => {
-                    console.log("dlsdkajsdklaslk{}",data)
                     if (data.result === null) {
                         let accessToken = data.token.access;
                         let refreshToken = data.token.refresh;
@@ -121,23 +120,23 @@ const memberStore = {
         //         }
         //     );
         // },
-        // async userLogout({ commit }, userid) {
-        //     await logout(
-        //         userid,
-        //         ({ data }) => {
-        //             if (data.message === "success") {
-        //                 commit("SET_IS_LOGIN", false);
-        //                 commit("SET_USER_INFO", null);
-        //                 commit("SET_IS_VALID_TOKEN", false);
-        //             } else {
-        //                 console.log("유저 정보 없음!!!!");
-        //             }
-        //         },
-        //         (error) => {
-        //             console.log(error);
-        //         }
-        //     );
-        // },
+        async userLogout({ commit }, userid) {
+            await logout(
+                userid,
+                ({ data }) => {
+                    if (data.message === "success") {
+                        commit("SET_IS_LOGIN", false);
+                        commit("SET_USER_INFO", null);
+                        commit("SET_IS_VALID_TOKEN", false);
+                    } else {
+                        console.log("유저 정보 없음!!!!");
+                    }
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        },
     },
 };
 

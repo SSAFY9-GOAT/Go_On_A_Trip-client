@@ -3,7 +3,7 @@
         <nav>
             <header-nav :user="user"></header-nav>
         </nav>
-        <router-view @login="login" @join="join"/>
+        <router-view  @join="join"/>
     </div>
 </template>
 
@@ -24,31 +24,6 @@ export default {
     methods: {
         logout() {
             this.user = null;
-        },
-        login(user) {
-            // user 정보 요청 api 주소
-            const API_URL = `http://localhost:8080/login`;
-            console.log(user);
-            // axios 요청 (Spring Boot Rest API 참고)
-            axios({
-                url: API_URL,
-                method: "post",
-                data:
-                user,
-
-            }).then((res) => {
-                // res.data;
-                console.log(res.data);
-                if (res.data) {
-                    const loginUser = res.data;
-                    this.user = loginUser;
-                    localStorage.setItem("login-user", loginUser);
-                    this.$store.state.loginUser=loginUser;
-                    this.$router.push('/');
-                }
-            }).catch((err) => {
-                console.log(err);
-            });
         },
         join(info){
             const API_URL = `http://localhost:8080/regist`;
