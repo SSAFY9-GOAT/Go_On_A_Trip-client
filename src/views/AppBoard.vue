@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-view @write="write" @modify="modify"></router-view>
+        <router-view @write="write" @modify="modify" @deleted="deleted"></router-view>
     </div>
 </template>
 
@@ -37,15 +37,38 @@ export default {
         },
         modify(article) {
             let articleId = article.articleId;
-            const API_URL = `http://localhost:8080/articles/"${articleId}"/modify`;
+            const API_URL = `http://localhost:8080/articles/${articleId}/modify`;
             console.log(article);
             axios({
                 url: API_URL,
                 method: "POST",
-                data:
-                article,
+                data:{
+                    title: article.title,
+                    content: article.content,
+                },
+                params:{
+                    loginUserId: this.$store.state.loginUser.id,
+                }
             }).then(() => {
-                this.$router.push(`/articles/"${articleId}"`)
+                this.$router.push(`/articles/${articleId}`)
+            }).catch((err) => {
+                console.log(err);
+            });
+        },
+        deleted(articleId) {
+            const API_URL = `http://localhost:8080/articles/${articleId}/delete`;
+            console.log(articleId);
+            axios({
+                url: API_URL,
+                method: "POST",
+                data:{
+                    // articleId: articleId
+                },
+                params:{
+                    loginUserId: this.$store.state.loginUser.id,
+                }
+            }).then(() => {
+                this.$router.push(`/articles`)
             }).catch((err) => {
                 console.log(err);
             });

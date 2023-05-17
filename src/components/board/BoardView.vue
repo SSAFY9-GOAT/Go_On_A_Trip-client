@@ -19,7 +19,7 @@
                 <div v-if="$store.state.loginUser.nickname === article.nickname" class='notion-footer mt-5 '>
                     <router-link :to="{name: 'boardmodify', params: {articleId: article.articleId}}" class='btn btn-outline-success'>수정하기</router-link>
 
-                    <a class='btn btn-outline-danger' href="${root}/article/${article.articleId}/remove">삭제하기</a>
+                    <button type="button" class='btn btn-outline-danger' @click="deleted">삭제하기</button>
                 </div>
 
             <div class='m-5 m-auto p-lg-5 container-sm justify-content-center align-content-center'>
@@ -96,6 +96,11 @@ export default {
             .catch(error => {
                 console.log(error);
             })
+    },
+    methods: {
+        deleted() {
+            this.$emit("deleted", this.$route.params.articleId);
+        }
     }
 }
 
