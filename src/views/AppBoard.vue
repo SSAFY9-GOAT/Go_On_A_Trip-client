@@ -17,7 +17,7 @@ export default {
     methods: {
         write(article) {
             const API_URL = `http://localhost:8080/articles/write`;
-            console.log(this.$store.state.loginUser.id);
+            console.log(this.$store.state.memberStore.loginUser.id);
             axios({
                 url: API_URL,
                 method: "POST",
@@ -26,7 +26,7 @@ export default {
                     content: article.content,
                 },
                 params:{
-                    loginUserId: this.$store.state.loginUser.id,
+                    loginUserId: this.$store.state.memberStore.loginUser.id,
                 }
             }).then((res) => {
                 console.log(res);
@@ -47,7 +47,7 @@ export default {
                     content: article.content,
                 },
                 params:{
-                    loginUserId: this.$store.state.loginUser.id,
+                    loginUserId: this.$store.state.memberStore.loginUser.id,
                 }
             }).then(() => {
                 this.$router.push(`/articles/${articleId}`)
@@ -65,7 +65,7 @@ export default {
                     // articleId: articleId
                 },
                 params:{
-                    loginUserId: this.$store.state.loginUser.id,
+                    loginUserId: this.$store.state.memberStore.loginUser.id,
                 }
             }).then(() => {
                 this.$router.push(`/articles`)

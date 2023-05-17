@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-                <div v-if="$store.state.loginUser.nickname === article.nickname" class='notion-footer mt-5 '>
+                <div v-if="$store.state.memberStore.loginUser.nickname === article.nickname" class='notion-footer mt-5 '>
                     <router-link :to="{name: 'boardmodify', params: {articleId: article.articleId}}" class='btn btn-outline-success'>수정하기</router-link>
 
                     <button type="button" class='btn btn-outline-danger' @click="deleted">삭제하기</button>
