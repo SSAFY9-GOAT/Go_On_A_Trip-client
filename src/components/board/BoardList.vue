@@ -6,7 +6,8 @@
                     <form class="row g-3" method="get" action="${root}/article/list">
                         <input type="hidden" name="action" value="list">
                         <div class="col-auto">
-                            <input type="text" class="form-control" id="condition" name="condition" placeholder="작성자, 제목, 내용">
+                            <input type="text" class="form-control" id="condition" name="condition"
+                                   placeholder="작성자, 제목, 내용">
                         </div>
                         <div class="col-auto">
                             <select class="form-select" name="sortCondition">
@@ -33,11 +34,15 @@
                         </thead>
                         <tbody class="table-group-divider">
                         <tr v-for="article in articleList" :key="article.articleId">
-                            <td>{{article.articleId}}</td>
-                            <td><router-link :to="{name: 'boardview', params: {articleId: article.articleId}}">{{article.title}}</router-link></td>
-                            <td>{{article.nickname}}</td>
-                            <td>{{article.hit}}</td>
-                            <td>{{article.createdDate}}</td>
+                            <td>{{ article.articleId }}</td>
+                            <td>
+                                <router-link :to="{name: 'boardview', params: {articleId: article.articleId}}">
+                                    {{ article.title }}
+                                </router-link>
+                            </td>
+                            <td>{{ article.nickname }}</td>
+                            <td>{{ article.hit }}</td>
+                            <td>{{ article.createdDate }}</td>
                         </tr>
                         <!--                        <c:forEach items="${articles}" var="article" varStatus="status">-->
                         <!--                            <tr>-->
@@ -100,7 +105,11 @@ export default {
     },
     created() {
         const API_URL = `http://localhost:8080/articles`;
-        axios.get(API_URL)
+        const headers = {
+            Authorization: sessionStorage.getItem("access-token"),
+            'access-token': sessionStorage.getItem("access-token"),
+        }
+        axios.get(API_URL,{headers})
             .then(response => {
                 console.log(response.data.data.content);
                 this.articleList = response.data.data.content;
@@ -111,7 +120,8 @@ export default {
     },
     methods: {
         moveWrite() {
-            this.$router.push({name: 'boardwrite'}).catch(()=>{});
+            this.$router.push({name: 'boardwrite'}).catch(() => {
+            });
         },
     }
 }

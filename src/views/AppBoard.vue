@@ -27,7 +27,11 @@ export default {
                 },
                 params:{
                     loginUserId: this.$store.state.memberStore.loginUser.id,
-                }
+                },
+                headers:{
+                    Authorization: sessionStorage.getItem("access-token"),
+                    'access-token': sessionStorage.getItem("access-token"),
+                },
             }).then((res) => {
                 console.log(res);
                 this.$router.push(`/articles`)

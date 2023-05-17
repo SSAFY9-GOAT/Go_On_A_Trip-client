@@ -88,7 +88,12 @@ export default {
     created() {
         let articleId = this.$route.params.articleId;
         const API_URL = `http://localhost:8080/articles/${articleId}`;
-        axios.get(API_URL)
+        axios.get(API_URL,{
+            headers:{
+                "Access-Control-Allow-Origin":"http://localhost:3000/",
+                Authorization: sessionStorage.getItem("access-token"),
+            }
+        })
             .then(response => {
                 console.log(response.data);
                 this.article = response.data.data;
