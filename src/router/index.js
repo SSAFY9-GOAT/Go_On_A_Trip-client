@@ -22,8 +22,7 @@ const onlyAuthUser = async (to, from, next) => {
     }
     if (!checkToken || checkUserInfo === null) {
         alert("로그인이 필요한 페이지입니다..");
-        // next({ name: "login" });
-        router.push({ name: "login" });
+        router.push({name: "login"});
     } else {
         console.log("로그인 했다!!!!!!!!!!!!!.");
         next();
@@ -83,21 +82,27 @@ const routes = [
         component: () => import('@/components/JoinForm.vue')
     },
     {
-        path:'/mypage',
+        path: '/mypage',
         name: 'mypage',
         component: () => import('@/views/AppMypage.vue'),
         children: [
             {
                 path: "",
-                name:'info',
+                name: 'info',
                 beforeEnter: onlyAuthUser,
                 component: () => import('@/components/member/UserInfo.vue')
             },
             {
                 path: "modify",
-                name:'modify',
+                name: 'modify',
                 beforeEnter: onlyAuthUser,
                 component: () => import('@/components/member/ModifyUser.vue')
+            },
+            {
+                path: "modifyPw",
+                name: 'modifyPw',
+                beforeEnter: onlyAuthUser,
+                component: () => import('@/components/member/ModifyPassword.vue')
             }
         ]
     }
