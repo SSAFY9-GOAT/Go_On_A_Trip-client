@@ -2,10 +2,10 @@
     <div>
         <div>
             <div class="container">
-                <form class="row" @change="getTourList()">
+                <form class="row">
                     <!--                <form class="row">-->
                     <div class="col-3">
-                        <select class="form-select" aria-label="sidoCode" id="sidoCode">
+                        <select class="form-select" aria-label="sidoCode" id="sidoCode" v-model="sidoCode" v-on:change="getGugun">
                             <option v-for="sido in sidos" :key="sido.code" :value="sido.code">{{ sido.name }}</option>
                         </select>
                     </div>
@@ -99,20 +99,27 @@ export default {
         return {
             sidos: [],
             guguns: [],
-            sidoCode: null,
-            gugunCode: null,
+            sidoCode: 1,
+            gugunCode: 1,
         };
     },
     created() {
-        const API_URL = `http://localhost:8080/api/attraction/sido`;
-        axios.get(API_URL)
+        const SIDO_URL = `http://localhost:8080/api/attraction/sido`;
+        axios.get(SIDO_URL)
             .then(response => {
                 this.sidos = response.data;
             })
-
+        this.getGugun();
     },
     methods: {
-
+        getGugun(){
+            let sidoCode = this.sidoCode;
+            const GUGUN_URL = `http://localhost:8080/api/attraction/gugun/${sidoCode}`;
+            axios.get(GUGUN_URL)
+                .then(response => {
+                    this.guguns = response.data;
+                })
+        }
     }
 }
 
