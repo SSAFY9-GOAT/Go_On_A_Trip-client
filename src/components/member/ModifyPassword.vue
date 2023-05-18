@@ -101,9 +101,9 @@ export default {
                     url: API_URL,
                     method: "post",
                     data: {
-                        id:this.$store.state.memberStore.loginUser.id,
-                        originalPw:this.oldPassword,
-                        newPw:this.newPassword,
+                        id: this.$store.state.memberStore.loginUser.id,
+                        originalPw: this.oldPassword,
+                        newPw: this.newPassword,
                     },
                     headers: {
                         "Access-Control-Allow-Origin": "http://localhost:3000/",
@@ -119,7 +119,7 @@ export default {
                         this.userLogout(this.$store.state.memberStore.loginUser.loginId);
                         sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
                         sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-                        if (this.$route.path != "/") this.$router.push({ name: "login" });
+                        if (this.$route.path != "/") this.$router.push({name: "login"});
                     }
                 }).catch((err) => {
                     console.log(err);
