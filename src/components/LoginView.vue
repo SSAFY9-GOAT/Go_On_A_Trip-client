@@ -35,7 +35,7 @@
                     <button id="btn-login" class="w-100 mb-3 btn btn-lg btn-primary" type="button"
                             @click="confirm">로그인
                     </button>
-                    <!-- <img src="@/assets/img/NaverLoginBtn.png" @click="naverLogin" class="w-100 mb-3"> -->
+                    <!--                     <img src="@/assets/img/NaverLoginBtn.png" @click="naverLogin" class="w-100 mb-3"> -->
                     <button
                             type="button"
                             class="w-100 mb-3 btn btn-sm btn-outline-warning"
@@ -65,9 +65,8 @@
 </template>
 
 <script>
-import {mapActions,  mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 import jwtDecode from "jwt-decode";
-// import memberStore from "@/store/modules/memberStore";
 
 const memberStore = "memberStore";
 export default {
@@ -92,11 +91,8 @@ export default {
             let decodeToken = jwtDecode(token);
             console.log("2. getUserInfo() decodeToken :: ", decodeToken);
             if (this.isLogin) {
-                // await this.getUserInfo(token);
                 this.userInfo = decodeToken.loginUser;
-                // console.log("33333333333333333333{}",memberStore.state.loginUser);
-                // commit("SET_USER_INFO", );
-                this.$store.state.memberStore.loginUser=this.userInfo;
+                this.$store.state.memberStore.loginUser = this.userInfo;
                 console.log("4. confirm() userInfo :: ", this.userInfo);
                 this.$router.push({name: "index"});
             }
@@ -104,14 +100,6 @@ export default {
         movePage() {
             this.$router.push({name: "join"});
         },
-        // login() {
-        //     let user = {
-        //         id: this.id,
-        //         password: this.password,
-        //     };
-        //
-        //     this.$emit("login", user);
-        // },
     },
 }
 </script>
