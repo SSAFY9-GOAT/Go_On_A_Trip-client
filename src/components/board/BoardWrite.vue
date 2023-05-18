@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "BoardWrite",
     data() {
@@ -59,6 +61,28 @@ export default {
             };
             this.$emit("write", article);
         }
+    },
+    created() {
+        // todo: 로그인 되어있는 유저인지 모듈 빼기
+        let articleId = this.$route.params.articleId;
+        const API_URL = `http://localhost:8080/articles/${articleId}`;
+        axios.get(API_URL,{
+            headers:{
+                "Access-Control-Allow-Origin":"http://localhost:3000/",
+                "Access-Control-Allow-Headers":'Authorization',
+                Authorization: sessionStorage.getItem("access-token"),
+            }
+        })
+            .then(response => {
+                console.log(response.data);
+                this.article = response.data.data;
+            })
+            .catch(error => {
+                // console.log(error);
+                alert(error.response.data.message);
+                this.$router.push({name: "login"});
+                console.log(error.response.data.message);
+            })
     }
 }
 </script>

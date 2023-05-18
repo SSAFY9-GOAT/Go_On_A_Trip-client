@@ -91,6 +91,7 @@ export default {
         axios.get(API_URL,{
             headers:{
                 "Access-Control-Allow-Origin":"http://localhost:3000/",
+                "Access-Control-Allow-Headers":'Authorization',
                 Authorization: sessionStorage.getItem("access-token"),
             }
         })
@@ -99,7 +100,10 @@ export default {
                 this.article = response.data.data;
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
+                alert(error.response.data.message);
+                this.$router.push({name: "login"});
+                console.log(error.response.data.message);
             })
     },
     methods: {

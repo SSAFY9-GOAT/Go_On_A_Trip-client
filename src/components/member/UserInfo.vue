@@ -87,7 +87,12 @@ export default {
                 url: API_URL,
                 method: "get",
                 params: {
-                    loginId: this.$store.state.loginUser.loginId,
+                    loginId: this.$store.state.memberStore.loginUser.loginId,
+                },
+                headers:{
+                    "Access-Control-Allow-Origin":"http://localhost:3000/",
+                    "Access-Control-Allow-Headers":'Authorization',
+                    Authorization: sessionStorage.getItem("access-token"),
                 }
 
             }).then((res) => {
@@ -103,7 +108,7 @@ export default {
     },
     created() {
         this.$store.state.myPageState = "my-info";
-        console.log("[마이페이지] 로그인 한 유저={}", this.$store.state.loginUser)
+        console.log("[마이페이지] 로그인 한 유저={}", this.$store.state.memberStore.loginUser)
         this.getUserInfo();
     }
 }
