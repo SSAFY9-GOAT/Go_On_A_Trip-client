@@ -103,9 +103,16 @@ const routes = [
                 name: 'modifyPw',
                 beforeEnter: onlyAuthUser,
                 component: () => import('@/components/member/ModifyPassword.vue')
+            },
+            {
+                path: "withdrawal",
+                name: "withdrawal",
+                beforeEnter: onlyAuthUser,
+                component: () => import('@/components/member/WithdrawalUser.vue')
             }
         ]
-    }
+    },
+
 ]
 
 const router = new VueRouter({
