@@ -99,7 +99,12 @@ export default {
                 url: API_URL,
                 method: "get",
                 params: {
-                    loginId: this.$store.state.loginUser.loginId,
+                    loginId: this.$store.state.memberStore.loginUser.loginId,
+                },
+                headers:{
+                    "Access-Control-Allow-Origin":"http://localhost:3000/",
+                    "Access-Control-Allow-Headers":'Authorization',
+                    Authorization: sessionStorage.getItem("access-token"),
                 }
 
             }).then((res) => {
@@ -156,11 +161,16 @@ export default {
                 url: API_URL,
                 method: 'post',
                 data: {
-                    id: this.userInfo.id,
+                    loginId: this.userInfo.loginId,
                     password: this.passwordCheck,
                     email: this.userInfo.email,
                     phone: this.userInfo.phone,
                     nickname: this.userInfo.nickname
+                },
+                headers:{
+                    "Access-Control-Allow-Origin":"http://localhost:3000/",
+                    "Access-Control-Allow-Headers":'Authorization',
+                    Authorization: sessionStorage.getItem("access-token"),
                 }
             }).then((res) => {
                 if (res.data === 1) {
