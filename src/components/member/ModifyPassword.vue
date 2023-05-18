@@ -30,7 +30,7 @@
                                    @keyup="validPwCheck"
                                    v-model="newPassword"
                             >
-                            <div class="small text-sm-start "
+                            <div class="small text-sm-start mt-2"
                                  :class="{'text-danger': !validPwLength, 'text-success' : validPwLength }">
                                 <b-icon icon="check" aria-hidden="false"></b-icon>
                                 8자 ~ 20자
@@ -57,7 +57,7 @@
                             <input type="password" class="form-control" id="passwordCheck" name="passwordCheck"
                                    placeholder="비밀번호 확인"
                                    v-model="passwordCheck" @keyup="samePassword">
-                            <div class="small text-sm-start text-danger" v-if="!samePw">
+                            <div class="small text-sm-start text-danger mt-2" v-if="!samePw">
                                 <b-icon icon="check" aria-hidden="false"></b-icon>
                                 비밀번호가 일치하지 않습니다.
                             </div>
@@ -140,6 +140,7 @@ export default {
         },
         validPwCheck() {
             this.validPwLength = this.newPassword.length >= 8 && this.newPassword.length <= 20;
+            this.validPwIncludeSc = false;
 
             var pattern1 = /[0-9]/; //숫자
             var pattern2 = /[a-zA-Z]/; //영어
