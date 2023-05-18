@@ -5,8 +5,9 @@
     >
       <h1 class="h2">회원 탈퇴</h1>
       <div class="btn-toolbar mb-2 mb-md-0 ">
-        <div class="btn-group me-2">
+        <div class="btn-group me-2" :class="{ shake: disabled }">
           <button id="btn-delete-member" type="button" class="btn btn-sm btn-danger" @click="withdrawal">탈퇴하기</button>
+          <template v-if="disabled">비밀번호를 확인하세요</template>
         </div>
       </div>
     </div>
@@ -18,7 +19,7 @@
           <div class="col-12">
             <label for="pw" class="form-label">비밀번호를 입력하세요</label>
             <div class="input-group ">
-              <input type="password" class="form-control" id="pw" name="pw"
+              <input type="password" class="form-control" id="pw" name="pw" v-model="password"
                      required>
             </div>
           </div>
@@ -36,16 +37,19 @@ export default {
   data(){
     return{
       password:"",
+      disabled:false,
     }
   },
   methods:{
     withdrawal(){
       const API_URL = `http://localhost:8080/withdrawal`;
+      console.log("[Vue]회원탈퇴")
       axios({
         url: API_URL,
         method: "post",
         data: {
-          password: this.password,
+          loginId:this.$store.state.memberStore.loginUser.loginId,
+          loginPw: this.password,
         },
         headers: {
           "Access-Control-Allow-Origin": "http://localhost:3000/",
@@ -55,22 +59,23 @@ export default {
 
       }).then((res) => {
         // res.data;
-        console.log("[정보수정페이지] 유저 정보 응답={}", res);
+        console.log("[회원탈퇴] 응답={}", res);
         if (res.data === 1) {
-          alert("비밀번호 변경이 완료되었습니다. 다시 로그인 하세요.")
-          this.userLogout(this.$store.state.memberStore.loginUser.loginId);
+          alert("탈퇴가 완료되었습니다.")
+          // this.userLogout(this.$store.state.memberStore.loginUser.loginId);
           sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
           sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-          if (this.$route.path != "/") this.$router.push({name: "login"});
+          if (this.$route.path != "/") this.$router.push({name: "index"});
+        }else{
+          this.disabled = true;
+          setTimeout(() => {
+            this.disabled = false
+          }, 1500)
         }
       }).catch((err) => {
         console.log(err);
+
       });
-    } else {
-      this.disabled = true;
-      setTimeout(() => {
-  this.disabled = false
-}, 1500)
     },
   },
   created() {
@@ -80,5 +85,31 @@ export default {
 </script>
 
 <style scoped>
+.shake {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+}
 
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
 </style>
