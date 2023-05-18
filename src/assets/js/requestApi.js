@@ -25,24 +25,6 @@ function createAttraction(response) {
   document.getElementById("tour-list").innerHTML = content;
 }
 
-function getSigunguCode(sidoCode) {
-  const url = `http://localhost:8080/api/attraction/gugun/${sidoCode}`;
-
-  fetch(url)
-      .then((response) => response.json())
-      .then((list) => createSigunguCode(list));
-
-  function createSigunguCode(response) {
-    let items = response.data;
-    console.log(items)
-    let content = "";
-    items.forEach(function (item) {
-      content += `<option value="${item.code}">${item.name}</option>`
-    });
-    document.getElementById("gugunCode").innerHTML = content;
-  }
-}
-
 function searchAttraction() {
   console.log('searchAttraction');
   let attractionName = document.getElementById('attractionName').value;
