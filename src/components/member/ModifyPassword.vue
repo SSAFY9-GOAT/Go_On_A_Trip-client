@@ -35,11 +35,6 @@
                                 <b-icon icon="check" aria-hidden="false"></b-icon>
                                 8자 ~ 20자
                             </div>
-<!--                            <div class="small text-sm-start text-danger"-->
-<!--                                 :class="{'text-danger': !validPwInclude, 'text-success' : validPwInclude }">-->
-<!--                                <b-icon icon="check" aria-hidden="false"></b-icon>-->
-<!--                                영어, 숫자, 특수문자 포함-->
-<!--                            </div>-->
                             <div class="small text-sm-start "
                                  :class="{'text-danger': !validPwIncludeEng, 'text-success' : validPwIncludeEng }">
                                 <b-icon icon="check" aria-hidden="false"></b-icon>
@@ -75,7 +70,10 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
+import {mapActions} from "vuex";
+
+const memberStore = "memberStore";
 
 export default {
     name: "ModifyPassword",
@@ -93,10 +91,40 @@ export default {
         }
     },
     methods: {
+        ...mapActions(memberStore, ["userLogout"]),
         modifyPassword() {
-            if(this.validPwLength&&this.validPwIncludeNum&&this.validPwIncludeEng&&this.validPwIncludeSc&&this.samePw){
+            if (this.validPwLength && this.validPwIncludeNum && this.validPwIncludeEng && this.validPwIncludeSc && this.samePw) {
                 this.disabled = false;
-            }else{
+
+                const API_URL = `http://localhost:8080/modipyPw`;
+                axios({
+                    url: API_URL,
+                    method: "post",
+                    data: {
+                        id:this.$store.state.memberStore.loginUser.id,
+                        originalPw:this.oldPassword,
+                        newPw:this.newPassword,
+                    },
+                    headers: {
+                        "Access-Control-Allow-Origin": "http://localhost:3000/",
+                        "Access-Control-Allow-Headers": 'Authorization',
+                        Authorization: sessionStorage.getItem("access-token"),
+                    }
+
+                }).then((res) => {
+                    // res.data;
+                    console.log("[정보수정페이지] 유저 정보 응답={}", res);
+                    if (res.data === 1) {
+                        alert("비밀번호 변경이 완료되었습니다. 다시 로그인 하세요.")
+                        this.userLogout(this.$store.state.memberStore.loginUser.loginId);
+                        sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
+                        sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+                        if (this.$route.path != "/") this.$router.push({ name: "login" });
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
+            } else {
                 this.disabled = true;
                 setTimeout(() => {
                     this.disabled = false
@@ -128,95 +156,6 @@ export default {
             }
 
         },
-        // getUserInfo() {
-        //     // user 정보 요청 api 주소
-        //     const API_URL = `http://localhost:8080/mypage`;
-        //     // axios 요청 (Spring Boot Rest API 참고)
-        //     axios({
-        //         url: API_URL,
-        //         method: "get",
-        //         params: {
-        //             loginId: this.$store.state.memberStore.loginUser.loginId,
-        //         },
-        //         headers:{
-        //             "Access-Control-Allow-Origin":"http://localhost:3000/",
-        //             "Access-Control-Allow-Headers":'Authorization',
-        //             Authorization: sessionStorage.getItem("access-token"),
-        //         }
-        //
-        //     }).then((res) => {
-        //         // res.data;
-        //         console.log("[정보수정페이지] 유저 정보 응답={}", res);
-        //         if (res.data) {
-        //             this.userInfo = res.data;
-        //         }
-        //     }).catch((err) => {
-        //         console.log(err);
-        //     });
-        // },
-        // getPhoneMask(val) {
-        //     this.userInfo.phone = this.getMask(val)
-        // },
-        // getMask(phoneNumber) {
-        //     if (!phoneNumber) return phoneNumber
-        //     phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
-        //
-        //     let res = ''
-        //     if (phoneNumber.length < 3) {
-        //         res = phoneNumber
-        //     } else {
-        //         if (phoneNumber.substr(0, 2) == '02') {
-        //
-        //             if (phoneNumber.length <= 5) {//02-123-5678
-        //                 res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 3)
-        //             } else if (phoneNumber.length > 5 && phoneNumber.length <= 9) {//02-123-5678
-        //                 res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 3) + '-' + phoneNumber.substr(5)
-        //             } else if (phoneNumber.length > 9) {//02-1234-5678
-        //                 res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 4) + '-' + phoneNumber.substr(6)
-        //             }
-        //
-        //         } else {
-        //             if (phoneNumber.length < 8) {
-        //                 res = phoneNumber
-        //             } else if (phoneNumber.length == 8) {
-        //                 res = phoneNumber.substr(0, 4) + '-' + phoneNumber.substr(4)
-        //             } else if (phoneNumber.length == 9) {
-        //                 res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 3) + '-' + phoneNumber.substr(6)
-        //             } else if (phoneNumber.length == 10) {
-        //                 res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 3) + '-' + phoneNumber.substr(6)
-        //             } else if (phoneNumber.length > 10) { //010-1234-5678
-        //                 res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 4) + '-' + phoneNumber.substr(7)
-        //             }
-        //         }
-        //     }
-        //     return res
-        // },
-        // modifyUserInfo() {
-        //     const API_URL = `http://localhost:8080/modify`;
-        //
-        //     axios({
-        //         url: API_URL,
-        //         method: 'post',
-        //         data: {
-        //             loginId: this.userInfo.loginId,
-        //             password: this.passwordCheck,
-        //             email: this.userInfo.email,
-        //             phone: this.userInfo.phone,
-        //             nickname: this.userInfo.nickname
-        //         },
-        //         headers:{
-        //             "Access-Control-Allow-Origin":"http://localhost:3000/",
-        //             "Access-Control-Allow-Headers":'Authorization',
-        //             Authorization: sessionStorage.getItem("access-token"),
-        //         }
-        //     }).then((res) => {
-        //         if (res.data === 1) {
-        //             alert("정보가 변경 되었습니다.")
-        //             this.getUserInfo();
-        //             this.$router.push('/mypage')
-        //         }
-        //     })
-        // },
     },
     created() {
         this.$store.state.myPageState = "modifyPw";
