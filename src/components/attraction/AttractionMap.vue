@@ -5,21 +5,15 @@
 </template>
 
 <script>
-import axios from "axios";
-// const itemStore = "itemStore";
 
 export default {
     name: "AttractionMap",
+    props: ['attractions'],
     data() {
         return {
             map: null,
             overlays: [],
             markers: [],
-            sidos: [],
-            guguns: [],
-            gugunCode: 1,
-            sidoCode: 1,
-            contentTypeId: 12,
         };
     },
     created() {
@@ -53,26 +47,9 @@ export default {
             // this.getTourList();
             this.map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
         },
-        getTourList() {
-            const API_URL = `http://localhost:8080/api/attraction/search`;
-            axios({
-                url: API_URL,
-                method: "GET",
-                data:{
-                    gugunCode: this.gugunCode,
-                    sidoCode: this.sidoCode,
-                    contentTypeId: this.contentTypeId,
-                },
-                params:{
-                }
-            }).then((res) => {
-                console.log(res);
-                // this.gugunCode = res.data.data
-                // this.sidoCode = res.data.data
-                // this.contentTypeId = res.data.data
-            }).catch((err) => {
-                console.log(err);
-            });
+        refreshMap() {
+            this.setCenter(this.attractions);
+            this.marker(this.attractions);
         },
         setCenter(response) {
             // 이동할 위도 경도 위치를 생성합니다
@@ -103,11 +80,11 @@ export default {
                 });
                 this.markers.push(marker);
 
-                var content = '<div class="wrap">' +
+                let content = '<div class="wrap">' +
                     '    <div class="info">' +
                     '        <div class="title">' +
                     attractions[i].title +
-                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                    '            <div class="close" @click="closeOverlay()" title="닫기"></div>' +
                     '        </div>' +
                     '        <div class="body">' +
                     '            <div class="img">' +
@@ -131,14 +108,12 @@ export default {
         },
         closeOverlay() {
             this.overlays[0].setMap(null);
-        }
-
-
+}
     }
 }
 </script>
 
-<style scoped>
+<style>
 .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
 .wrap * {padding: 0;margin: 0;}
 .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}

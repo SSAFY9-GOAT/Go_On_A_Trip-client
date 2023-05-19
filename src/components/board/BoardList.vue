@@ -111,11 +111,9 @@ export default {
         }
         axios.get(API_URL,{headers})
             .then(response => {
-                console.log(response.data.data.content);
                 this.articleList = response.data.data.content;
                 this.articleList.forEach(function (article){
                     article.createdDate = article.createdDate.replace('T', ' ');
-                    console.log(article.createdDate);
                 })
             })
             .catch(error => {

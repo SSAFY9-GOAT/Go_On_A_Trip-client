@@ -10,13 +10,13 @@
                         </select>
                     </div>
                     <div class="col-3">
-                        <select class="form-select" aria-label="gugunCode" id="gugunCode">
+                        <select class="form-select" aria-label="gugunCode" id="gugunCode" v-model="gugunCode">
                             <option v-for="gugun in guguns" :key="gugun.code" :value="gugun.code">{{ gugun.name }}
                             </option>
                         </select>
                     </div>
                     <div class="col-3">
-                        <select class="form-select" aria-label="contentTypeId" id="contentTypeId">
+                        <select class="form-select" aria-label="contentTypeId" id="contentTypeId" v-model="contentTypeId">
                             <option value="12">관광지</option>
                             <option value="14">문화시설</option>
                             <option value="15">축제공연행사</option>
@@ -33,7 +33,8 @@
                                 type="button"
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasScrolling"
-                                aria-controls="offcanvasScrolling">
+                                aria-controls="offcanvasScrolling"
+                                @click="getAttraction">
                             결과 열기
                         </button>
                     </div>
@@ -41,7 +42,7 @@
                 </form>
             </div>
             <!-- start map -->
-            <AttractionMap></AttractionMap>
+            <AttractionMap :attractions="attractions" ref="map"></AttractionMap>
             <!-- end map -->
             <!-- start right bar -->
 
@@ -101,6 +102,8 @@ export default {
             guguns: [],
             sidoCode: 1,
             gugunCode: 1,
+            contentTypeId: 12,
+            attractions: [],
         };
     },
     created() {
@@ -111,14 +114,34 @@ export default {
             })
         this.getGugun();
     },
+    mounted() {
+        this.getAttraction();
+    },
     methods: {
         getGugun(){
             let sidoCode = this.sidoCode;
+            this.gugunCode = 1;
             const GUGUN_URL = `http://localhost:8080/api/attraction/gugun/${sidoCode}`;
             axios.get(GUGUN_URL)
                 .then(response => {
                     this.guguns = response.data;
                 })
+        },
+        getAttraction(){
+            const SEARCH_URL = `http://localhost:8080/api/attraction/search`;
+            axios({
+                url: SEARCH_URL,
+                method: 'GET',
+                params: {
+                    sidoCode: this.sidoCode,
+                    gugunCode: this.gugunCode,
+                    contentTypeId: this.contentTypeId,
+                }
+            }).then((res) => {
+                this.attractions = [];
+                this.attractions = res.data;
+            })
+            this.$refs.map.refreshMap();
         }
     }
 }
