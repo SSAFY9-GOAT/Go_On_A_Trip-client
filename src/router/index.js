@@ -112,6 +112,11 @@ const routes = [
             }
         ]
     },
+    {
+        path:"/findPassword",
+        name:"findPw",
+        component: () => import('@/components/member/FindPassword.vue')
+    },
 
 ]
 

@@ -17,7 +17,7 @@
                         />
                         <label for="userId">아이디</label>
                     </div>
-                    <div class="form-floating">
+                    <div class="form-floating mt-1">
                         <input
                                 type="password"
                                 class="form-control"
@@ -44,11 +44,10 @@
                     >
                         아이디 찾기
                     </button>
-                    <button
+                    <button to="/findPassword"
                             type="button"
                             class="w-100 mb-3 btn btn-sm btn-outline-warning"
-                            data-bs-toggle="modal"
-                            data-bs-target="#findPasswordModal"
+                            @click="openFindPwModal"
                     >
                         비밀번호 찾기
                     </button>
@@ -68,8 +67,11 @@
 import {mapActions, mapState} from "vuex";
 import jwtDecode from "jwt-decode";
 
+import FindPassword from "@/components/member/FindPassword.vue";
+
 const memberStore = "memberStore";
 export default {
+    components: {FindPassword},
     name: "LoginView",
     data() {
         return {
@@ -77,6 +79,8 @@ export default {
                 id: "",
                 password: "",
             },
+            findPwModal : false,
+
         };
     },
     computed: {
@@ -99,6 +103,19 @@ export default {
         },
         movePage() {
             this.$router.push({name: "join"});
+        },
+        openFindPwModal() {
+        },
+        closeFindPwModal() {
+        },
+        doFindPwSend() {
+            if (this.message.length > 0) {
+                alert(this.message)
+                this.message = ''
+                this.closeModal()
+            } else {
+                alert('메시지를 입력해주세요.')
+            }
         },
     },
 }
