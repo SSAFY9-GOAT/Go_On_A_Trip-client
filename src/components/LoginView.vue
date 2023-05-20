@@ -71,7 +71,7 @@ import FindPassword from "@/components/member/FindPassword.vue";
 
 const memberStore = "memberStore";
 export default {
-    components: {FindPassword},
+    // components: {FindPassword},
     name: "LoginView",
     data() {
         return {
