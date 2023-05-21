@@ -60,6 +60,17 @@
                 </div>
             </main>
         </div>
+        <FindPassword @close="closeFindPwModal" v-if="findPwModal">
+            <!-- default 슬롯 콘텐츠 -->
+            <p>Vue.js Modal Window!</p>
+            <div><input v-model="message"></div>
+            <!-- /default -->
+            <!-- footer 슬롯 콘텐츠 -->
+            <template slot="footer">
+                <button @click="doFindPwSend">제출</button>
+            </template>
+            <!-- /footer -->
+        </FindPassword>
     </div>
 </template>
 
@@ -71,7 +82,7 @@ import FindPassword from "@/components/member/FindPassword.vue";
 
 const memberStore = "memberStore";
 export default {
-    // components: {FindPassword},
+    components: {FindPassword},
     name: "LoginView",
     data() {
         return {
@@ -80,7 +91,7 @@ export default {
                 password: "",
             },
             findPwModal : false,
-
+            message: ''
         };
     },
     computed: {
@@ -104,9 +115,10 @@ export default {
         movePage() {
             this.$router.push({name: "join"});
         },
-        openFindPwModal() {
+        openFindPwModal() {this.findPwModal = true;
         },
         closeFindPwModal() {
+            this.findPwModal = false;
         },
         doFindPwSend() {
             if (this.message.length > 0) {
