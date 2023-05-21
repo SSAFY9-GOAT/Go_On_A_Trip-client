@@ -62,12 +62,20 @@
         </div>
         <FindPassword @close="closeFindPwModal" v-if="findPwModal">
             <!-- default 슬롯 콘텐츠 -->
-            <p>Vue.js Modal Window!</p>
-            <div><input v-model="message"></div>
+            <p>비밀번호 찾기</p>
+            <hr>
+            <div class="mb-3">
+                <label for="findPwId">아이디</label><br>
+                <input id="findPwId" v-model="findPwId" class="form-control" placeholder="아이디">
+            </div>
+            <div>
+                <label for="findPwPhone">가입 시 입력한 전화번호를 입력하세요</label><br>
+                <input id="findPwPhone" v-model="findPwPhone" @keyup="getPhoneMask(findPwPhone)" class="form-control" placeholder="전화번호"
+                maxlength="13" ></div>
             <!-- /default -->
             <!-- footer 슬롯 콘텐츠 -->
             <template slot="footer">
-                <button @click="doFindPwSend">제출</button>
+                <button class="btn btn-warning" @click="doFindPwSend">제출</button>
             </template>
             <!-- /footer -->
         </FindPassword>
@@ -79,6 +87,7 @@ import {mapActions, mapState} from "vuex";
 import jwtDecode from "jwt-decode";
 
 import FindPassword from "@/components/member/FindPassword.vue";
+import axios from "axios";
 
 const memberStore = "memberStore";
 export default {
@@ -90,8 +99,9 @@ export default {
                 id: "",
                 password: "",
             },
-            findPwModal : false,
-            message: ''
+            findPwModal: false,
+            findPwId: '',
+            findPwPhone: "",
         };
     },
     computed: {
@@ -115,20 +125,82 @@ export default {
         movePage() {
             this.$router.push({name: "join"});
         },
-        openFindPwModal() {this.findPwModal = true;
+        openFindPwModal() {
+            this.findPwModal = true;
         },
         closeFindPwModal() {
             this.findPwModal = false;
         },
         doFindPwSend() {
-            if (this.message.length > 0) {
-                alert(this.message)
-                this.message = ''
-                this.closeModal()
+            if (this.findPwId.length > 0 && this.findPwPhone.length > 0 ) {
+                const API_URL = `http://localhost:8080/findPw`;
+                axios({
+                    url: API_URL,
+                    method: "post",
+                    data: {
+                        loginId:this.findPwId,
+                        phone: this.findPwPhone,
+                    },
+                    headers: {
+                        "Access-Control-Allow-Origin": "http://localhost:3000/",
+                        "Access-Control-Allow-Headers": 'Authorization',
+                        Authorization: sessionStorage.getItem("access-token"),
+                    }
+                }).then((res) => {
+                    // res.data;
+                    console.log("[비밀번호 찾기] 유저 정보 응답={}", res);
+                    if (res.data.message === "success") {
+                        alert("입력한 전화번호로 임시 비밀번호가 발급되었습니다. 로그인 후 비밀번호를 바꾸세요.")
+                        this.closeFindPwModal()
+                    }else{
+                        alert("입력한 정보와 일치하는 이용자가 없습니다. 입력을 확인하세요.")
+                        this.closeFindPwModal()
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
+                this.closeFindPwModal()
             } else {
                 alert('메시지를 입력해주세요.')
             }
         },
+        getPhoneMask(val) {
+            this.findPwPhone = this.getMask(val)
+        },
+        getMask(phoneNumber) {
+            if (!phoneNumber) return phoneNumber
+            phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
+
+            let res = ''
+            if (phoneNumber.length < 3) {
+                res = phoneNumber
+            } else {
+                if (phoneNumber.substr(0, 2) == '02') {
+
+                    if (phoneNumber.length <= 5) {//02-123-5678
+                        res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 3)
+                    } else if (phoneNumber.length > 5 && phoneNumber.length <= 9) {//02-123-5678
+                        res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 3) + '-' + phoneNumber.substr(5)
+                    } else if (phoneNumber.length > 9) {//02-1234-5678
+                        res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 4) + '-' + phoneNumber.substr(6)
+                    }
+
+                } else {
+                    if (phoneNumber.length < 8) {
+                        res = phoneNumber
+                    } else if (phoneNumber.length == 8) {
+                        res = phoneNumber.substr(0, 4) + '-' + phoneNumber.substr(4)
+                    } else if (phoneNumber.length == 9) {
+                        res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 3) + '-' + phoneNumber.substr(6)
+                    } else if (phoneNumber.length == 10) {
+                        res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 3) + '-' + phoneNumber.substr(6)
+                    } else if (phoneNumber.length > 10) { //010-1234-5678
+                        res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 4) + '-' + phoneNumber.substr(7)
+                    }
+                }
+            }
+            return res
+        }
     },
 }
 </script>
