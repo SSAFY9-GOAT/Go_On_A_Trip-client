@@ -6,10 +6,10 @@
                     <form class="row g-3" method="get" action="${root}/tripPlan/list">
                         <input type="hidden" name="action" value="list">
                         <div class="col-auto">
-                            <input type="text" class="form-control" id="condition" name="condition" placeholder="작성자, 제목">
+                            <input type="text" class="form-control" name="condition" v-model="condition" placeholder="작성자, 제목">
                         </div>
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-secondary mb-3">검색</button>
+                            <button type="button" class="btn btn-secondary mb-3" @click="loadData">검색</button>
                             <button type="button" class="btn btn-primary mb-3" @click="moveWrite">글쓰기</button>
                         </div>
                     </form>
@@ -38,37 +38,11 @@
                         </tbody>
                     </table>
                 </div>
-<!--                <%&#45;&#45; 페이징 시작 &#45;&#45;%>-->
-<!--                <div class="d-flex justify-content-center mt-3">-->
-<!--                    <nav aria-label="Page navigation example">-->
-<!--                        <ul class="pagination">-->
-<!--                            <%&#45;&#45; 이전버튼시작 &#45;&#45;%>-->
-<!--                            <c:if test="${page.prev}">-->
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link"-->
-<!--                                       href="${root}/tripPlan/list&pageNum=${page.startPage-1}&amount=${page.amount}">이전</a>-->
-<!--                                </li>-->
-<!--                            </c:if>-->
-<!--                            <%&#45;&#45; 이전버튼종료 &#45;&#45;%>-->
-<!--                            <%&#45;&#45; 페이징번호 처리시작 &#45;&#45;%>-->
-<!--                            <c:forEach var="num" begin="${page.startPage}" end="${page.endPage}">-->
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link" href="${root}/tripPlan/list?pageNum=${num}&amount=${page.amount}">${num}</a>-->
-<!--                                </li>-->
-<!--                            </c:forEach>-->
-<!--                            <%&#45;&#45; 페이징번호 처리종료 &#45;&#45;%>-->
-<!--                            <%&#45;&#45; 시작버튼시작 &#45;&#45;%>-->
-<!--                            <c:if test="${page.next}">-->
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link"-->
-<!--                                       href="${root}/tripPlan/list&pageNum=${page.endPage + 1}&amount=${page.amount}">다음</a>-->
-<!--                                </li>-->
-<!--                            </c:if>-->
-<!--                            <%&#45;&#45; 시작버튼종료 &#45;&#45;%>-->
-<!--                        </ul>-->
-<!--                    </nav>-->
-<!--                </div>-->
-<!--                <%&#45;&#45; 페이징 종료 &#45;&#45;%>-->
+                <TripPlanPagination
+                    :current-page="currentPage"
+                    :total-pages="totalPages"
+                    @update-page="updatePage"
+                ></TripPlanPagination>
             </div>
         </main>
     </div>
@@ -76,11 +50,12 @@
 
 <script>
 import axios from "axios";
+import TripPlanPagination from "@/components/tripplan/TripPlanPagination.vue";
 
 export default {
     name: "TripPlanList",
     components: {
-
+        TripPlanPagination,
     },
     data() {
         return {
@@ -119,6 +94,10 @@ export default {
                     console.log(error);
                 })
         },
+        updatePage(page) {
+            this.currentPage = page;
+            this.loadData();
+        }
     }
 }
 </script>
