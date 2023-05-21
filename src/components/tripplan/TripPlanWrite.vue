@@ -31,11 +31,8 @@
             </div>
             <!-- start album -->
 
-<!--            <div class="row">-->
-<!--                <div id="map" class='col-8 mh-100'>-->
-<!--                    <script type="text/javascript"-->
-<!--                            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=92031818da3bea1d2a0cd22686ab48ea"></script>-->
-<!--                </div>-->
+            <div class="row">
+                <TripPlanMap class='col-8 mh-100' :plans="plans"></TripPlanMap>
 <!--                <div class="col-4">-->
 <!--                    <form id="planList" method="post" action="${root}/tripPlan/create">-->
 <!--                        <input type="hidden" id="contentList" name="contentList" value="">-->
@@ -51,7 +48,7 @@
 <!--                        <button id="createPlan" type='submit' class='btn btn-success' >최적의 경로로 등록하기</button>-->
 <!--                    </form>-->
 <!--                </div>-->
-<!--            </div>-->
+            </div>
 
             <!-- end album -->
             <!-- start right bar -->
@@ -80,10 +77,14 @@
 </template>
 
 <script>
+import TripPlanMap from "@/components/tripplan/TripPlanMap.vue";
+
 export default {
     name: "TripPlanWrite",
+    components: {TripPlanMap},
     data() {
         return {
+            plans: [],
         };
     },
     methods: {

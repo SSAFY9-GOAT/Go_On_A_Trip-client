@@ -29,7 +29,7 @@
                                 <td>{{plan.tripPlanId}}</td>
                                 <td>
                                     <router-link :to="{name: 'tripplanview', params: {tripPlanId: plan.tripPlanId}}">
-                                        {{plan.tripPlanId}}
+                                        {{plan.title}}
                                     </router-link>
                                 </td>
                                 <td class='text-center'>{{plan.nickname}}</td>
