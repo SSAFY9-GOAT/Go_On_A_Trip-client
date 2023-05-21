@@ -5,7 +5,7 @@
             <ul class="pagination">
                 <!--                            이전버튼시작-->
                 <li class="page-item">
-                    <button class="page-link" :disabled="currentPage === 1" @click="previousPage">Previous</button>
+                    <button class="page-link" :disabled="currentPage === 1" @click="previousPage">이전</button>
                 </li>
                 <!--                            이전버튼종료-->
                 <!--                            페이징번호 처리시작-->
@@ -15,7 +15,7 @@
                 <!--                            페이징번호 처리종료-->
                 <!--                            시작버튼시작-->
                 <li class="page-item">
-                    <button class="page-link" :disabled="currentPage === totalPages" @click="nextPage">Next</button>
+                    <button class="page-link" :disabled="currentPage === totalPages" @click="nextPage">다음</button>
                 </li>
 
                 <!--                            시작버튼종료-->
