@@ -98,6 +98,7 @@ export default {
             .then(response => {
                 console.log(response.data);
                 this.article = response.data.data;
+                this.article.createdDate = this.article.createdDate.replace('T', ' ');
             })
             .catch(error => {
                 // console.log(error);
