@@ -5,7 +5,8 @@
                 <form class="row">
                     <!--                <form class="row">-->
                     <div class="col-3">
-                        <select class="form-select" aria-label="sidoCode" id="sidoCode" v-model="sidoCode" v-on:change="getGugun">
+                        <select class="form-select" aria-label="sidoCode" id="sidoCode" v-model="sidoCode"
+                                v-on:change="getGugun">
                             <option v-for="sido in sidos" :key="sido.code" :value="sido.code">{{ sido.name }}</option>
                         </select>
                     </div>
@@ -16,7 +17,8 @@
                         </select>
                     </div>
                     <div class="col-3">
-                        <select class="form-select" aria-label="contentTypeId" id="contentTypeId" v-model="contentTypeId">
+                        <select class="form-select" aria-label="contentTypeId" id="contentTypeId"
+                                v-model="contentTypeId">
                             <option value="12">관광지</option>
                             <option value="14">문화시설</option>
                             <option value="15">축제공연행사</option>
@@ -48,6 +50,7 @@
 
             <div
                     class="offcanvas offcanvas-start"
+                    :class="{'show': showOffcanvas}"
                     data-bs-scroll="true"
                     data-bs-backdrop="false"
                     tabindex="-1"
@@ -59,25 +62,22 @@
                     <button
                             type="button"
                             class="btn-close"
-                            data-bs-dismiss="offcanvas"
-                            aria-label="Close"
+                            @click="toggleOffcanvas"
                     ></button>
                 </div>
                 <div class="offcanvas-body">
                     <div class="album py-5">
                         <div class="container">
                             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3" id="tour-list">
-                                <!--                            <c:forEach items="${attractions}" var="attraction">-->
-                                <!--                                <div class="col">-->
-                                <!--                                    <div class="card shadow-sm">-->
-                                <!--                                        <img src="${attraction.firstImage}" alt=""/>-->
-                                <!--                                        <div class="card-body">-->
-                                <!--                                            <h5 class="card-title">${attraction.title}</h5>-->
-                                <!--                                            <h6 class="card-subtitle mb-2 text-muted">${attraction.addr1}</h6>-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-                                <!--                            </c:forEach>-->
+                                <div class="col">
+                                    <div v-for="attraction in attractions" :key="attraction.id" class="card shadow-sm">
+                                        <img :src=attraction.firstImage alt=""/>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ attraction.title }}</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">{{ attraction.addr1 }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,6 +104,7 @@ export default {
             gugunCode: 1,
             contentTypeId: 12,
             attractions: [],
+            showOffcanvas: false,
         };
     },
     created() {
@@ -115,10 +116,13 @@ export default {
         this.getGugun();
     },
     mounted() {
-        this.getAttraction();
+        // this.getAttraction();
     },
     methods: {
-        getGugun(){
+        toggleOffcanvas() {
+            this.showOffcanvas = !this.showOffcanvas;
+        },
+        getGugun() {
             let sidoCode = this.sidoCode;
             this.gugunCode = 1;
             const GUGUN_URL = `http://localhost:8080/api/attraction/gugun/${sidoCode}`;
@@ -127,7 +131,7 @@ export default {
                     this.guguns = response.data;
                 })
         },
-        getAttraction(){
+        getAttraction() {
             const SEARCH_URL = `http://localhost:8080/api/attraction/search`;
             axios({
                 url: SEARCH_URL,
@@ -138,10 +142,10 @@ export default {
                     contentTypeId: this.contentTypeId,
                 }
             }).then((res) => {
-                this.attractions = [];
                 this.attractions = res.data;
             })
             this.$refs.map.refreshMap();
+            this.toggleOffcanvas();
         }
     }
 }
