@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import IndexView from "@/views/IndexView.vue";
-import BoardList from "@/components/board/BoardList.vue";
-import BoardWrite from "@/components/board/BoardWrite.vue";
-import BoardView from "@/components/board/BoardView.vue";
-import BoardModify from "@/components/board/BoardModify.vue"
 
 import store from "@/store";
 
@@ -55,24 +51,24 @@ const routes = [
             {
                 path: '',
                 name: 'boardlist',
-                component: BoardList,
+                component: () => import('@/components/board/BoardList.vue'),
             },
             {
                 path: 'write',
                 name: 'boardwrite',
                 beforeEnter: onlyAuthUser,
-                component: BoardWrite,
+                component: () => import('@/components/board/BoardWrite.vue'),
             },
             {
                 path: ':articleId',
                 name: 'boardview',
-                component: BoardView,
+                component: () => import('@/components/board/BoardView.vue'),
             },
             {
                 path: ':articleId/modify',
                 name: 'boardmodify',
                 beforeEnter: onlyAuthUser,
-                component: BoardModify,
+                component: () => import('@/components/board/BoardModify.vue'),
             },
         ]
     },
@@ -117,6 +113,32 @@ const routes = [
         name:"findPw",
         component: () => import('@/components/member/FindPassword.vue')
     },
+    {
+        path: "/tripplan",
+        name: "tripplan",
+        component: () => import('@/views/AppTripPlan.vue'),
+        redirect: "/tripplan",
+        children: [
+            {
+                path: "",
+                name: "tripplanlist",
+                component: () => import('@/components/tripplan/TripPlanList.vue'),
+            },
+            {
+                path: "/write",
+                name: "tripplanwrite",
+                beforeEnter: onlyAuthUser,
+                component: () => import('@/components/tripplan/TripPlanWrite.vue'),
+            },
+            {
+                path: ":tripplanid",
+                name: "tripplanview",
+                beforeEnter: onlyAuthUser,
+                component: () => import('@/components/tripplan/TripPlanView.vue'),
+
+            }
+        ]
+    }
 
 ]
 

@@ -17,7 +17,8 @@
                     <a href="${root}/hotPlace/list" class="nav-link px-3 link-dark">핫플레이스</a>
                 </li>
                 <li class="nav-item">
-                    <a href="${root}/tripPlan/list" class="nav-link px-3 link-dark">여행계획</a>
+<!--                    <a href="${root}/tripPlan/list" class="nav-link px-3 link-dark">여행계획</a>-->
+                    <router-link :to="{name: 'tripplan'}" class="nav-link px-3 link-dark">여행계획</router-link>
                 </li>
                 <li class="nav-item">
                     <a href="${root}/notion/list" class="nav-link px-3 link-dark">공지사항</a>
@@ -28,7 +29,7 @@
                     </li>
                     <li class="nav-item">
 <!--                        <router-link to="/logout" class="nav-link link-dark px-3">로그아웃</router-link>-->
-                        <span class="align-self-center link" @click.prevent="onClickLogout">로그아웃</span>
+                        <span class="nav-link link-dark px-3" @click.prevent="onClickLogout">로그아웃</span>
                     </li>
                 </template>
                 <template v-else>
