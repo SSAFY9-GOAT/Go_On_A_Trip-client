@@ -44,48 +44,14 @@
                             <td>{{ article.hit }}</td>
                             <td>{{ article.createdDate }}</td>
                         </tr>
-                        <!--                        <c:forEach items="${articles}" var="article" varStatus="status">-->
-                        <!--                            <tr>-->
-                        <!--                                <th scope="row" class='text-center'>${status.count}</th>-->
-                        <!--                                <td><a class='linkToNotion' href='${root}/article/detail/${article.articleId}'>${article.title}</a></td>-->
-                        <!--                                <td class='text-center'>${article.createdDate}</td>-->
-                        <!--                            </tr>-->
-                        <!--                        </c:forEach>-->
                         </tbody>
                     </table>
                 </div>
-
-                <!--                페이징 시작-->
-                <div class="d-flex justify-content-center mt-3">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <!--&lt;!&ndash;                            이전버튼시작&ndash;&gt;-->
-                            <!--                            <c:if test="${page.prev}">-->
-                            <!--                                <li class="page-item">-->
-                            <!--                                    <a class="page-link"-->
-                            <!--                                       href="${root}/article/list?pageNum=${page.startPage-1}&amount=${page.amount}">이전</a>-->
-                            <!--                                </li>-->
-                            <!--                            </c:if>-->
-                            <!--&lt;!&ndash;                            이전버튼종료&ndash;&gt;-->
-                            <!--&lt;!&ndash;                            페이징번호 처리시작&ndash;&gt;-->
-                            <!--                            <c:forEach var="num" begin="${page.startPage}" end="${page.endPage}">-->
-                            <!--                                <li class="page-item">-->
-                            <!--                                    <a class="page-link" href="${root}/article/list?pageNum=${num}&amount=${page.amount}">${num}</a>-->
-                            <!--                                </li>-->
-                            <!--                            </c:forEach>-->
-                            <!--&lt;!&ndash;                            페이징번호 처리종료&ndash;&gt;-->
-                            <!--&lt;!&ndash;                            시작버튼시작&ndash;&gt;-->
-                            <!--                            <c:if test="${page.next}">-->
-                            <!--                                <li class="page-item">-->
-                            <!--                                    <a class="page-link"-->
-                            <!--                                       href="${root}/article/list?pageNum=${page.endPage + 1}&amount=${page.amount}">다음</a>-->
-                            <!--                                </li>-->
-                            <!--                            </c:if>-->
-                            <!--&lt;!&ndash;                            시작버튼종료&ndash;&gt;-->
-                        </ul>
-                    </nav>
-                </div>
-                <!--                페이징 종료-->
+                <BoardPagination
+                :current-page="currentPage"
+                :total-pages="totalPages"
+                @update-page="updatePage"
+                ></BoardPagination>
             </div>
         </main>
     </div>
@@ -94,37 +60,53 @@
 <script>
 
 import axios from "axios";
+import BoardPagination from "@/components/board/BoardPagination.vue";
 
 export default {
     name: 'BoardList',
-    components: {},
+    components: {
+        BoardPagination,
+    },
     data() {
         return {
+            currentPage: 1,
+            totalPages: 0,
             articleList: [],
         }
     },
     created() {
-        const API_URL = `http://localhost:8080/articles`;
-        const headers = {
-            Authorization: sessionStorage.getItem("access-token"),
-            'access-token': sessionStorage.getItem("access-token"),
-        }
-        axios.get(API_URL,{headers})
-            .then(response => {
-                this.articleList = response.data.data.content;
-                this.articleList.forEach(function (article){
-                    article.createdDate = article.createdDate.replace('T', ' ');
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        this.loadData();
     },
     methods: {
         moveWrite() {
             this.$router.push({name: 'boardwrite'}).catch(() => {
             });
         },
+        loadData() {
+            const API_URL = `http://localhost:8080/articles`;
+            const headers = {
+                Authorization: sessionStorage.getItem("access-token"),
+                'access-token': sessionStorage.getItem("access-token"),
+            };
+            const params = {
+                page : this.currentPage
+            }
+            axios.get(API_URL, {headers, params})
+                .then(response => {
+                    this.articleList = response.data.data.content;
+                    this.articleList.forEach(function (article) {
+                        article.createdDate = article.createdDate.replace('T', ' ');
+                    })
+                    this.totalPages = response.data.data.totalPages;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        updatePage(page) {
+            this.currentPage = page;
+            this.loadData();
+        }
     }
 }
 </script>
