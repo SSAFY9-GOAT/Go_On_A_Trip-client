@@ -6,8 +6,8 @@
                     <form class="row g-3" method="get" action="${root}/article/list">
                         <input type="hidden" name="action" value="list">
                         <div class="col-auto">
-                            <input type="text" class="form-control" id="condition" name="condition"
-                                   placeholder="작성자, 제목, 내용">
+                            <input type="text" class="form-control" name="condition" v-model="condition"
+                                   placeholder="제목">
                         </div>
                         <div class="col-auto">
                             <select class="form-select" name="sortCondition">
@@ -16,8 +16,8 @@
                             </select>
                         </div>
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-secondary mb-3">검색</button>
-                            <button type="button" class="btn btn-primary mb-3" v-on:click="moveWrite">글쓰기</button>
+                            <button type="button" class="btn btn-secondary mb-3" @click="loadData">검색</button>
+                            <button type="button" class="btn btn-primary mb-3" @click="moveWrite">글쓰기</button>
                         </div>
                     </form>
                 </div>
@@ -69,6 +69,7 @@ export default {
     },
     data() {
         return {
+            condition: "",
             currentPage: 1,
             totalPages: 0,
             articleList: [],
@@ -89,7 +90,8 @@ export default {
                 'access-token': sessionStorage.getItem("access-token"),
             };
             const params = {
-                page : this.currentPage
+                page : this.currentPage,
+                condition : this.condition,
             }
             axios.get(API_URL, {headers, params})
                 .then(response => {
@@ -98,6 +100,7 @@ export default {
                         article.createdDate = article.createdDate.replace('T', ' ');
                     })
                     this.totalPages = response.data.data.totalPages;
+                    //todo : 검색 시 페이징 처리
                 })
                 .catch(error => {
                     console.log(error);
@@ -106,7 +109,7 @@ export default {
         updatePage(page) {
             this.currentPage = page;
             this.loadData();
-        }
+        },
     }
 }
 </script>

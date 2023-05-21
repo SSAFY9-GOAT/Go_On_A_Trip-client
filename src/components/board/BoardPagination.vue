@@ -40,8 +40,6 @@ export default {
     },
     methods: {
         goToPage(page) {
-            // 페이지 번호를 클릭할 때 적절한 페이지 데이터를 로드하는 로직을 구현
-            // 예: API 호출 등
             this.$emit('update-page', page);
         },
         previousPage() {
