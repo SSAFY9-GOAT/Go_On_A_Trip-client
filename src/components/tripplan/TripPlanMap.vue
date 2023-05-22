@@ -7,7 +7,7 @@
 <script>
 export default {
     name: "TripPlanMap",
-    props: ['Plans'],
+    props: ['attraction'],
     data() {
         return {
             map: null,
@@ -41,8 +41,23 @@ export default {
             // this.getTourList();
             this.map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
         },
-        addMarker() {
+        addMarker(attraction) {
+            this.setCenter(attraction.latitude, attraction.longitude);
+            // this.tripPlanList.push(attraction);
+            // console.log(this.tripPlanList);
+        },
+        setCenter(x, y) {
+            let moveLatLon = new window.kakao.maps.LatLng(x, y);
 
+            this.map.setCenter(moveLatLon);
+
+            let markerPosition = new window.kakao.maps.LatLng(x, y);
+            let marker = new window.kakao.maps.Marker({
+                position: markerPosition,
+            });
+
+            this.map.setLevel(4);
+            marker.setMap(this.map);
         }
     }
 }

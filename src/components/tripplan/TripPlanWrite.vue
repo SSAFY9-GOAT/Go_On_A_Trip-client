@@ -32,7 +32,8 @@
             <!-- start album -->
 
             <div class="row">
-                <TripPlanMap class='col-8 mh-100' :plans="plans" ref="map"></TripPlanMap>
+<!--                맵 표시-->
+                <TripPlanMap class='col-8 mh-100' ref="map"></TripPlanMap>
                                 <div class="col-4">
                                     <form id="planList" method="post" action="${root}/tripPlan/create">
                                         <input type="hidden" id="contentList" name="contentList" value="">
@@ -75,8 +76,8 @@
                                             <h6 class="card-subtitle mb-2 text-muted">{{ attraction.addr1 }}</h6>
                                         </div>
                                         <span>
-                                        <b-button class="mx-2 mb-2" variant="outline-secondary" @click="addMarker()">보기</b-button>
-                                        <b-button class="mx-2 mb-2" variant="outline-success" >추가</b-button>
+                                        <b-button class="mx-2 mb-2" variant="outline-secondary" @click="addMarker(attraction)">보기</b-button>
+                                        <b-button class="mx-2 mb-2" variant="outline-success" @click="addAttraction(attraction)">추가</b-button>
 
                                         </span>
                                     </div>
@@ -99,14 +100,14 @@ import TripPlanMap from "@/components/tripplan/TripPlanMap.vue";
 
 export default {
 
-
     name: "TripPlanWrite",
     components: {TripPlanMap},
     data() {
         return {
             condition: "",
             attractionList: [],
-            plans: [],
+            attraction: null,
+            tripPlanList: [],
             showOffcanvas: false,
         };
     },
@@ -129,8 +130,15 @@ export default {
             })
             this.toggleOffcanvas();
         },
-        addMarker() {
-            this.$refs.map.addMarker();
+        addMarker(attraction) {
+            this.$refs.map.addMarker(attraction);
+        },
+        addAttraction(attraction) {
+            // console.log(attraction);
+            this.tripPlanList.push(attraction);
+            console.log(this.tripPlanList);
+            this.$refs.map.addMarker(attraction);
+            // todo: 추가를 누르면 삭제 버튼으로 바꾸고 삭제 기능 추가
         }
 
     }
