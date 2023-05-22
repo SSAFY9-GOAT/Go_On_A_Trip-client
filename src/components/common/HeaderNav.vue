@@ -14,10 +14,10 @@
                     <router-link :to="{name: 'articles'}" class="nav-link px-3 link-dark">자유게시판</router-link>
                 </li>
                 <li class="nav-item">
-                    <a href="${root}/hotPlace/list" class="nav-link px-3 link-dark">핫플레이스</a>
+                    <router-link :to="{name: 'hotplaces'}" class="nav-link px-3 link-dark">핫플레이스</router-link>
                 </li>
                 <li class="nav-item">
-<!--                    <a href="${root}/tripPlan/list" class="nav-link px-3 link-dark">여행계획</a>-->
+                    <!--                    <a href="${root}/tripPlan/list" class="nav-link px-3 link-dark">여행계획</a>-->
                     <router-link :to="{name: 'tripplan'}" class="nav-link px-3 link-dark">여행계획</router-link>
                 </li>
                 <li class="nav-item">
@@ -28,7 +28,7 @@
                         <router-link to="/mypage" class="nav-link link-dark px-3">마이페이지</router-link>
                     </li>
                     <li class="nav-item">
-<!--                        <router-link to="/logout" class="nav-link link-dark px-3">로그아웃</router-link>-->
+                        <!--                        <router-link to="/logout" class="nav-link link-dark px-3">로그아웃</router-link>-->
                         <span class="nav-link link-dark px-3" @click.prevent="onClickLogout">로그아웃</span>
                     </li>
                 </template>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import {mapState, mapGetters, mapActions} from "vuex";
 // import memberStore from "@/store/modules/memberStore";
 
 const memberStore = "memberStore";
@@ -89,7 +89,7 @@ export default {
             this.userLogout(this.loginUser.loginId);
             sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
             sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-            if (this.$route.path != "/") this.$router.push({ name: "main" });
+            if (this.$route.path != "/") this.$router.push({name: "main"});
         },
     },
     created() {

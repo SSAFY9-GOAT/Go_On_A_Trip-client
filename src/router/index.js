@@ -109,8 +109,8 @@ const routes = [
         ]
     },
     {
-        path:"/findPassword",
-        name:"findPw",
+        path: "/findPassword",
+        name: "findPw",
         component: () => import('@/components/member/FindPassword.vue')
     },
     {
@@ -136,6 +136,28 @@ const routes = [
                 beforeEnter: onlyAuthUser,
                 component: () => import('@/components/tripplan/TripPlanView.vue'),
 
+            }
+        ]
+    },
+    {
+        path: "/hotplaces",
+        name: 'hotplaces',
+        component: () => import('@/views/AppHotPlace.vue'),
+        children: [
+            {
+                path: "",
+                name: 'hotplace-list',
+                component: () => import('@/components/hotplace/HotplaceList.vue')
+            },
+            {
+                path: "write",
+                name: 'hotplace-write',
+                component: () => import('@/components/hotplace/HotplaceWrite.vue')
+            },
+            {
+                path: ":hotPlaceId",
+                name: 'hotplace-detail',
+                component: () => import('@/components/hotplace/HotplaceDetail.vue')
             }
         ]
     }
