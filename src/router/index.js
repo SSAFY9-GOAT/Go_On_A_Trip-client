@@ -131,7 +131,7 @@ const routes = [
                 component: () => import('@/components/tripplan/TripPlanWrite.vue'),
             },
             {
-                path: ":tripplanid",
+                path: ":tripPlanId",
                 name: "tripplanview",
                 beforeEnter: onlyAuthUser,
                 component: () => import('@/components/tripplan/TripPlanView.vue'),

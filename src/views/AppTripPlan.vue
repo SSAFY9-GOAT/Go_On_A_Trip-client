@@ -40,9 +40,11 @@ export default {
                 },
             }).then((res) => {
                 console.log(res);
+                this.$router.push(`/tripplan`)
             }).catch((err) => {
                 console.log(err);
             })
+
         }
     },
 }
