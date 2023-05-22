@@ -54,6 +54,7 @@ export default {
         setCenter(response) {
             // 이동할 위도 경도 위치를 생성합니다
             let attraction = response[0];
+            // todo: 지도를 이동시킬때 전체를 볼 수 있게끔?
             var moveLatLon = new window.kakao.maps.LatLng(attraction.latitude, attraction.longitude);
 
             // 지도 중심을 이동 시킵니다
