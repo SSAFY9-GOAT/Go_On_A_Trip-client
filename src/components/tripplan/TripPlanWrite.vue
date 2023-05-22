@@ -43,7 +43,10 @@
                                         </div>
                                         <table id="plan" class="table table-hover ">
                                             <tr>
-                                                <th>여행 경로</th>
+                                                <th class="pb-2">여행 경로</th>
+                                            </tr>
+                                            <tr v-for="tripPlan in tripPlanList" :key="tripPlan.id">
+                                                <td class="py-1">{{tripPlan.title}}</td>
                                             </tr>
                                         </table>
                                         <button id="createPlan" type='submit' class='btn btn-success' >최적의 경로로 등록하기</button>
@@ -140,7 +143,7 @@ export default {
             this.$refs.map.addMarker(attraction);
             // todo: 추가를 누르면 삭제 버튼으로 바꾸고 삭제 기능 추가
         }
-
+// todo: 경로그리기, 마커 한눈에 들어오기, db에 저장
     }
 }
 </script>
