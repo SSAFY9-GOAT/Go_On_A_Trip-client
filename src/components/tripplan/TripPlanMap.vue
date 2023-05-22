@@ -11,6 +11,9 @@ export default {
     data() {
         return {
             map: null,
+            linePath: [],
+            markers: [],
+
         }
     },
     mounted() {
@@ -26,7 +29,7 @@ export default {
             script.src =
                 "//dapi.kakao.com/v2/maps/sdk.js?appkey=" +
                 process.env.VUE_APP_KAKAO_MAP_API_KEY +
-                "&autoload=false";
+                "&autoload=false&libraries=clusterer";
             script.onload = () => window.kakao.maps.load(this.loadMap);
 
             document.head.appendChild(script);
@@ -42,22 +45,37 @@ export default {
             this.map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
         },
         addMarker(attraction) {
-            this.setCenter(attraction.latitude, attraction.longitude);
-            // this.tripPlanList.push(attraction);
-            // console.log(this.tripPlanList);
-        },
-        setCenter(x, y) {
-            let moveLatLon = new window.kakao.maps.LatLng(x, y);
+            this.setLoc(attraction.latitude, attraction.longitude);
 
-            this.map.setCenter(moveLatLon);
+        },
+        setLoc(x, y) {
+            // let moveLatLon = new window.kakao.maps.LatLng(x, y);
+            //
+            // this.map.setCenter(moveLatLon);
 
             let markerPosition = new window.kakao.maps.LatLng(x, y);
-            let marker = new window.kakao.maps.Marker({
-                position: markerPosition,
-            });
 
-            this.map.setLevel(4);
+            let marker = new window.kakao.maps.Marker({position: markerPosition});
             marker.setMap(this.map);
+
+            this.markers.push(marker.getPosition());
+            let bounds = new window.kakao.maps.LatLngBounds();
+            for (let i = 0; i < this.markers.length; i++) {
+                bounds.extend(this.markers[i]);
+            }
+            this.map.setBounds(bounds);
+
+            this.linePath.push(new window.kakao.maps.LatLng(x, y));
+
+            let polyline = new window.kakao.maps.Polyline({
+                path: this.linePath,
+                strokeWeight: 5, // 선의 두께 입니다
+                strokeColor: '#FF0000', // 선의 색깔입니다
+                strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeStyle: 'solid' // 선의 스타일입니다
+            });
+            polyline.setMap(null);
+            polyline.setMap(this.map);
         }
     }
 }
