@@ -142,6 +142,7 @@ const routes = [
     {
         path: "/hotplaces",
         name: 'hotplaces',
+        redirect: "hotplaces",
         component: () => import('@/views/AppHotPlace.vue'),
         children: [
             {
@@ -152,11 +153,13 @@ const routes = [
             {
                 path: "write",
                 name: 'hotplace-write',
+                beforeEnter: onlyAuthUser,
                 component: () => import('@/components/hotplace/HotplaceWrite.vue')
             },
             {
                 path: ":hotPlaceId",
                 name: 'hotplace-detail',
+                beforeEnter: onlyAuthUser,
                 component: () => import('@/components/hotplace/HotplaceDetail.vue')
             }
         ]
