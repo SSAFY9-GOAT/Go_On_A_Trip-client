@@ -13,11 +13,11 @@
                 <!-- start album -->
 
                 <div class="row">
-                    <DetailPlanMap class='col-8 mh-100' v-if="tripPlan" :detail-plans="tripPlan.detailPlans" ref="detailmap"></DetailPlanMap>
+                    <DetailPlanMap class='col-8 mh-100' v-if="tripPlan" :detail-plans="tripPlan.detailPlans"></DetailPlanMap>
                     <div class="col-4">
                         <div class="input-group mb-3">
                             <span class="input-group-text">제목</span>
-                            <input type="text" class="form-control" :value="tripPlan.title" name="planTitle"
+                            <input type="text" class="form-control" v-if="tripPlan" :value="tripPlan.title" name="planTitle"
                                    aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                    readonly>
                         </div>
@@ -30,8 +30,10 @@
                             </tr>
 
                         </table>
+                        <div v-if="tripPlan">
                         <div v-if="$store.state.memberStore.loginUser.nickname === tripPlan.nickname" >
                             <button type='button' class='btn btn-danger' @click="deleted">삭제하기</button>
+                        </div>
                         </div>
 
 
@@ -78,11 +80,6 @@ export default {
                     console.log(res.data)
                     this.tripPlan = res.data;
                 })
-                .then(() => {
-                    this.$nextTick(() => {
-                        // this.$refs.detailmap.loadMap();
-                    });
-            });
         },
         deleted() {
             this.$emit("delete", this.$route.params.tripPlanId);

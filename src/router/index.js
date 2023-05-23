@@ -163,6 +163,18 @@ const routes = [
                 component: () => import('@/components/hotplace/HotplaceDetail.vue')
             }
         ]
+    },
+    {
+        path: "/notice",
+        name: 'notice',
+        component: () => import('@/views/AppNotice.vue'),
+        children: [
+            {
+                path: "",
+                name: 'notice',
+                component: () => import('@/components/notice/NoticeList.vue')
+            },
+        ]
     }
 
 ]

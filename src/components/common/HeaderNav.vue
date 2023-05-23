@@ -21,7 +21,7 @@
                     <router-link :to="{name: 'tripplan'}" class="nav-link px-3 link-dark">여행계획</router-link>
                 </li>
                 <li class="nav-item">
-                    <a href="${root}/notion/list" class="nav-link px-3 link-dark">공지사항</a>
+                  <router-link :to="{name: 'notice'}" class="nav-link px-3 link-dark">공지사항</router-link>
                 </li>
                 <template v-if="loginUser">
                     <li class="nav-item">
