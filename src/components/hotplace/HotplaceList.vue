@@ -29,11 +29,9 @@
                          :key="hotplace.hotPlaceId">
                         <div class="card h-100">
                             <div class="position-relative">
-<!--                               todo: 이미지 표시하기 -->
-                                <img :src="getImagePath(hotplace.storeFileName)"
+                                <img :src="require(`@/assets/img/userUpload/${hotplace.storeFileName}`)"
                                      class="card-img-top"
                                      alt="..." style="width: 100%; height: 300px; object-fit:cover;">
-
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">{{ hotplace.name }}</h5>
@@ -42,17 +40,11 @@
                                     조회수 : {{ hotplace.hit }} <br> 작성자 : {{ hotplace.nickname }}
                                 </div>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <router-link :to="{name: 'hotplace-detail', params: {hotPlaceId: hotplace.hotPlaceId}}"
-                                        type="button" class="btn btn-primary"
-                                           >더보기
+                                    <router-link
+                                            :to="{name: 'hotplace-detail', params: {hotPlaceId: hotplace.hotPlaceId}}"
+                                            type="button" class="btn btn-primary"
+                                    >더보기
                                     </router-link>
-                                    <!--                                        <%---->
-                                    <!--                                        <button type="button" class="btn btn-primary" --%>-->
-                                    <!--                                            <%---->
-                                    <!--                                            onclick="location.href='/hotPlace/mvedit&hotPlaceId=${hotPlace.hotPlaceId}'">수정--%>-->
-                                    <!--                                            <%---->
-                                    <!--                                        </button>-->
-                                    <!--                                        --%>-->
                                     <button type="button" class="btn btn-primary"
                                             onclick="location.href='/likeHotPlace?hotPlaceId=${hotPlace.hotPlaceId}'">
                                         담기
@@ -87,15 +79,12 @@ export default {
         this.loadData();
     },
     methods: {
-        getImagePath(fileName){
-            return '@/assets/img/userUpload/' + fileName; // 경로 추가
-            // return require(`@/assets/img/userUpload/${fileName}`);
+        getImagePath(fileName) {
+            return require(`@/assets/img/userUpload/${fileName}`);
         },
         loadData() {
-            // user 정보 요청 api 주소
             const API_URL = `http://localhost:8080/hotplaces`;
             console.log("[핫플레이스] 리스트 요청")
-            // axios 요청 (Spring Boot Rest API 참고)
             axios({
                 url: API_URL,
                 method: "get",
