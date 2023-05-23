@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-view @write="write"></router-view>
+        <router-view @write="write" @delete="deleted"></router-view>
     </div>
 </template>
 
@@ -45,6 +45,20 @@ export default {
                 console.log(err);
             })
 
+        },
+        deleted(tripPlanId) {
+            const API_URL = `http://localhost:8080/tripplan/${tripPlanId}/delete`;
+            axios({
+                url: API_URL,
+                method: "POST",
+                params:{
+                    loginUserId: this.$store.state.memberStore.loginUser.id,
+                }
+            }).then(() => {
+                this.$router.push(`/tripplan`)
+            }).catch((err) => {
+                console.log(err);
+            });
         }
     },
 }
