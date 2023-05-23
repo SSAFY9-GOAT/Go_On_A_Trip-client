@@ -7,7 +7,6 @@
 <script>
 export default {
     name: "TripPlanMap",
-    props: ['attraction'],
     data() {
         return {
             map: null,

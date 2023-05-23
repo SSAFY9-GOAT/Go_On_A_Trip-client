@@ -80,8 +80,7 @@ export default {
     },
     methods: {
         moveWrite() {
-            this.$router.push({name: 'boardwrite'}).catch(() => {
-            });
+            this.$router.push({name: 'boardwrite'});
         },
         loadData() {
             const API_URL = `http://localhost:8080/articles`;
