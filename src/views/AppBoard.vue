@@ -61,13 +61,9 @@ export default {
         },
         deleted(articleId) {
             const API_URL = `http://localhost:8080/articles/${articleId}/delete`;
-            console.log(articleId);
             axios({
                 url: API_URL,
                 method: "POST",
-                data:{
-                    // articleId: articleId
-                },
                 params:{
                     loginUserId: this.$store.state.memberStore.loginUser.id,
                 }
