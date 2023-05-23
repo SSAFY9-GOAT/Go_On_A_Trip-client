@@ -69,7 +69,7 @@
                         <div class="container">
                             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3" id="tour-list">
                                 <div class="col">
-                                    <div v-for="attraction in attractions" :key="attraction.id" class="card shadow-sm">
+                                    <div v-for="attraction in attractions" :key="attraction.id" class="card shadow-sm mb-3">
                                         <img :src=attraction.firstImage alt=""/>
                                         <div class="card-body">
                                             <h5 class="card-title">{{ attraction.title }}</h5>
@@ -115,7 +115,6 @@ export default {
         this.getGugun();
     },
     mounted() {
-        // this.getAttraction();
     },
     methods: {
         toggleOffcanvas() {
@@ -142,9 +141,10 @@ export default {
                 }
             }).then((res) => {
                 this.attractions = res.data;
+                this.$refs.map.refreshMap();
+            }).then(() => {
+                this.toggleOffcanvas();
             })
-            this.$refs.map.refreshMap();
-            this.toggleOffcanvas();
         }
     }
 }
