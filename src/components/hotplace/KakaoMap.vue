@@ -8,17 +8,25 @@ export default {
     data() {
         return {
             map: null,
+            marker: null,
         }
     },
     mounted() {
+        console.log("mounted ::");
         if (window.kakao && window.kakao.maps) {
+
             this.loadMap();
         } else {
+
             this.loadScript();
         }
     },
+    created() {
+        console.log("created :: ");
+    },
     methods: {
         loadScript() {
+            console.log("loadScript :: ");
             const script = document.createElement("script");
             script.src =
                 "//dapi.kakao.com/v2/maps/sdk.js?appkey=" +
@@ -29,6 +37,7 @@ export default {
             document.head.appendChild(script);
         },
         loadMap() {
+            console.log("loadmap :: ");
             var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
             const options = { //지도를 생성할 때 필요한 기본 옵션
                 // center: new kakao.maps.LatLng(${attractions.get(0).latitude}, ${attractions.get(0).longitude}), //지도의 중심좌표.
@@ -37,14 +46,14 @@ export default {
             };
             // this.getTourList();
             this.map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+            this.$emit("initialized");
         },
         panTo(lon, lat) {
             // 이동할 위도 경도 위치를 생성합니다
             var moveLatLon = new window.kakao.maps.LatLng(lat, lon);
 
-            if (marker) {
-                // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-                marker.setMap(null);
+            if (this.marker) {
+                this.marker.setMap(null);
             }
 
             // 마커가 표시될 위치입니다
@@ -59,7 +68,32 @@ export default {
             marker.setMap(this.map);
 
             this.map.panTo(moveLatLon);
-        }
+        },
+        panToHotPlace(hotPlace) {
+            if (this.map && hotPlace) {
+                let moveLatLon = new window.kakao.maps.LatLng(
+                    hotPlace.latitude,
+                    hotPlace.longitude
+                );
+
+                if (this.marker) {
+                    this.marker.setMap(null);
+                }
+
+                var markerPosition = new window.kakao.maps.LatLng(
+                    hotPlace.latitude,
+                    hotPlace.longitude
+                );
+
+                this.marker = new window.kakao.maps.Marker({
+                    position: markerPosition,
+                });
+
+                this.marker.setMap(this.map);
+
+                this.map.panTo(moveLatLon);
+            }
+        },
     }
 }
 </script>
