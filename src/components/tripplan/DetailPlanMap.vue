@@ -1,6 +1,6 @@
 <template>
     <div class="mt-3">
-        <div id="map"  style="width: 100%; height: 600px"></div>
+        <div ref="map" style="width: 100%; height: 600px"></div>
     </div>
 </template>
 
@@ -32,12 +32,12 @@ export default {
                 "//dapi.kakao.com/v2/maps/sdk.js?appkey=" +
                 process.env.VUE_APP_KAKAO_MAP_API_KEY +
                 "&autoload=false";
-            script.onload = () => window.kakao.maps.load(this.loadMap);
+            script.onload = () => window.kakao.maps.load(() =>{this.loadMap});
 
             document.head.appendChild(script);
         },
         loadMap() {
-            var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+            let container = this.$refs.map; //지도를 담을 영역의 DOM 레퍼런스
             const options = { //지도를 생성할 때 필요한 기본 옵션
                 // center: new kakao.maps.LatLng(${attractions.get(0).latitude}, ${attractions.get(0).longitude}), //지도의 중심좌표.
                 center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
@@ -49,15 +49,17 @@ export default {
             this.setLine();
         },
         setMarker() {
+            let map = this.map;
+            let markers = this.markers;
             this.detailPlans.forEach(function (detailPlan){
                 let x = detailPlan.latitude;
                 let y = detailPlan.longitude;
                 let markerPosition = new window.kakao.maps.LatLng(x, y);
 
                 let marker = new window.kakao.maps.Marker({position: markerPosition});
-                marker.setMap(this.map);
+                marker.setMap(map);
 
-                this.markers.push(marker.getPosition());
+                markers.push(marker.getPosition());
             })
             let bounds = new window.kakao.maps.LatLngBounds();
             for (let i = 0; i < this.markers.length; i++) {
@@ -67,11 +69,11 @@ export default {
 
         },
         setLine() {
+            let linePath = this.linePath;
             this.detailPlans.forEach(function (detailPlan){
                 let x = detailPlan.latitude;
                 let y = detailPlan.longitude;
-                console.log(x)
-                this.linePath.push(new window.kakao.maps.LatLng(x, y));
+                linePath.push(new window.kakao.maps.LatLng(x, y));
             })
             let polyline = new window.kakao.maps.Polyline({
                 path: this.linePath,

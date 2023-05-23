@@ -13,7 +13,7 @@
                 <!-- start album -->
 
                 <div class="row">
-                    <DetailPlanMap class='col-8 mh-100' :detail-plans="tripPlan.detailPlans"></DetailPlanMap>
+                    <DetailPlanMap class='col-8 mh-100' v-if="tripPlan" :detail-plans="tripPlan.detailPlans" ref="detailmap"></DetailPlanMap>
                     <div class="col-4">
                         <div class="input-group mb-3">
                             <span class="input-group-text">제목</span>
@@ -30,7 +30,10 @@
                             </tr>
 
                         </table>
-                        <button id="removePlan" type='button' class='btn btn-danger'>삭제하기</button>
+                        <div v-if="$store.state.memberStore.loginUser.nickname === tripPlan.nickname" >
+                            <button type='button' class='btn btn-danger' @click="deleted">삭제하기</button>
+                        </div>
+
 
                     </div>
                 </div>
@@ -54,25 +57,37 @@ export default {
     },
     data() {
         return {
-            tripPlan: Object,
+            tripPlan: null,
         }
     },
-    created() {
-        let tripPlanId = this.$route.params.tripPlanId;
-        const API_URL = `http://localhost:8080/tripplan/${tripPlanId}`;
-        axios.get(API_URL, {
-            headers: {
-                "Access-Control-Allow-Origin": "http://localhost:3000/",
-                "Access-Control-Allow-Headers": 'Authorization',
-                Authorization: sessionStorage.getItem("access-token"),
-            }
-        })
-            .then(res => {
-                console.log(res.data)
-                this.tripPlan = res.data;
-            })
-
+    mounted() {
+        this.loadData();
     },
+    methods: {
+        loadData() {
+            let tripPlanId = this.$route.params.tripPlanId;
+            const API_URL = `http://localhost:8080/tripplan/${tripPlanId}`;
+            axios.get(API_URL, {
+                headers: {
+                    "Access-Control-Allow-Origin": "http://localhost:3000/",
+                    "Access-Control-Allow-Headers": 'Authorization',
+                    Authorization: sessionStorage.getItem("access-token"),
+                }
+            })
+                .then(res => {
+                    console.log(res.data)
+                    this.tripPlan = res.data;
+                })
+                .then(() => {
+                    this.$nextTick(() => {
+                        // this.$refs.detailmap.loadMap();
+                    });
+            });
+        },
+        deleted() {
+            this.$emit("delete", this.$route.params.tripPlanId);
+        }
+    }
 }
 </script>
 
