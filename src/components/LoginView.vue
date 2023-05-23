@@ -110,7 +110,8 @@ export default {
     ...mapState(memberStore, ["isLogin", "isLoginError", "loginUser"]),
   },
   mounted() {
-    const naver_id_login = new window.naver_id_login(process.env.NAVER_CLIENT_ID, process.env.NAVER_CALLBACK_URL);
+    const naver_id_login = new window.naver_id_login("TjbFSfFWxEGU5lsUKvzz", "http://localhost:3000/naverLogin");
+    // const naver_id_login = new window.naver_id_login(process.env.NAVER_CLIENT_ID, process.env.NAVER_CALLBACK_URL);
     const state = naver_id_login.getUniqState();
     naver_id_login.setButton("green", 10,65); // 버튼 설정
     naver_id_login.setState(state);
