@@ -38,11 +38,11 @@
                         </tbody>
                     </table>
                 </div>
-                <TripPlanPagination
+                <Pagination
                     :current-page="currentPage"
                     :total-pages="totalPages"
                     @update-page="updatePage"
-                ></TripPlanPagination>
+                ></Pagination>
             </div>
         </main>
     </div>
@@ -50,12 +50,12 @@
 
 <script>
 import axios from "axios";
-import TripPlanPagination from "@/components/tripplan/TripPlanPagination.vue";
+import Pagination from "@/components/common/Pagination.vue";
 
 export default {
     name: "TripPlanList",
     components: {
-        TripPlanPagination,
+        Pagination,
     },
     data() {
         return {

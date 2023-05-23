@@ -47,11 +47,11 @@
                         </tbody>
                     </table>
                 </div>
-                <BoardPagination
-                :current-page="currentPage"
-                :total-pages="totalPages"
-                @update-page="updatePage"
-                ></BoardPagination>
+                <Pagination
+                        :current-page="currentPage"
+                        :total-pages="totalPages"
+                        @update-page="updatePage"
+                ></Pagination>
             </div>
         </main>
     </div>
@@ -60,12 +60,12 @@
 <script>
 
 import axios from "axios";
-import BoardPagination from "@/components/board/BoardPagination.vue";
+import Pagination from "@/components/common/Pagination.vue";
 
 export default {
     name: 'BoardList',
     components: {
-        BoardPagination,
+        Pagination,
     },
     data() {
         return {
@@ -89,8 +89,8 @@ export default {
                 'access-token': sessionStorage.getItem("access-token"),
             };
             const params = {
-                page : this.currentPage,
-                condition : this.condition,
+                page: this.currentPage,
+                condition: this.condition,
             }
             axios.get(API_URL, {headers, params})
                 .then(response => {

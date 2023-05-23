@@ -9,9 +9,9 @@
                 </li>
                 <!--                            이전버튼종료-->
                 <!--                            페이징번호 처리시작-->
-                    <li class="page-item" v-for="page in totalPages" :key="page">
-                        <button class="page-link" @click="goToPage(page)">{{ page }}</button>
-                    </li>
+                <li class="page-item" v-for="page in totalPages" :key="page">
+                    <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+                </li>
                 <!--                            페이징번호 처리종료-->
                 <!--                            시작버튼시작-->
                 <li class="page-item">
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-    name: "BoardPagination",
+    name: "ListPagination",
     props: {
         currentPage: {
             type: Number,
