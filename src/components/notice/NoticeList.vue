@@ -35,14 +35,14 @@
                         </tbody>
                     </table>
                 </div>
-                <!--              <%-- 페이징 시작 --%>-->
-                <!--              -->
-                <!--              <%-- 페이징 종료 --%>-->
-                <!--              <c:if test="${userinfo.authority eq 'ADMIN'}">-->
-                <div class='wrapper m-auto mt-5'>
+                <Pagination
+                    :current-page="currentPage"
+                    :total-pages="totalPages"
+                    @update-page="updatePage"
+                ></Pagination>
+                <div v-if="$store.state.memberStore.loginUser.authority === 'ADMIN'" class='wrapper m-auto mt-5'>
                     <button type='button' @click="moveWrite" class='btn btn-success'>공지등록</button>
                 </div>
-                <!--              </c:if>-->
             </div>
         </main>
     </div>
@@ -51,10 +51,10 @@
 <script>
 
 import axios from "axios";
-
+import Pagination from "@/components/common/Pagination.vue";
 export default {
     name: "NoticeList",
-    components: {},
+    components: {Pagination},
     data() {
         return {
             currentPage: 1,
@@ -81,23 +81,25 @@ export default {
             }
             axios.get(API_URL, {headers, params})
                 .then(response => {
-
                     this.topNoticeList = response.data.data.topNotions;
                     this.noticeList = response.data.data.notions.content;
-                    console.log(this.noticeList)
                     this.topNoticeList.forEach(function (article) {
                         article.createdDate = article.createdDate.replace('T', ' ');
                     })
                     this.noticeList.forEach(function (article) {
                         article.createdDate = article.createdDate.replace('T', ' ');
                     })
-                    this.totalPages = response.data.data.totalPages;
+                    this.totalPages = response.data.data.notions.totalPages;
                     //todo : 검색 시 페이징 처리
                 })
                 .catch(error => {
                     console.log(error);
                 })
-        }
+        },
+        updatePage(page) {
+            this.currentPage = page;
+            this.loadData();
+        },
     }
 }
 </script>
