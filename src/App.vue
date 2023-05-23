@@ -4,16 +4,19 @@
             <header-nav :user="user"></header-nav>
         </nav>
         <router-view  @join="join"/>
+        <footer-nav></footer-nav>
     </div>
 </template>
 
 <script>
 import HeaderNav from "@/components/common/HeaderNav.vue";
 import axios from "axios";
+import FooterNav from "@/components/common/FooterNav.vue";
 
 export default {
     name: "App",
     components: {
+        FooterNav,
         HeaderNav,
     },
     data() {
