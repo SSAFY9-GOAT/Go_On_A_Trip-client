@@ -78,8 +78,6 @@ import axios from "axios";
 
 export default {
     name: 'BoardView',
-    components: {},
-    props: [],
     data() {
         return {
             article: Object,
@@ -101,7 +99,6 @@ export default {
                 this.article.createdDate = this.article.createdDate.replace('T', ' ');
             })
             .catch(error => {
-                // console.log(error);
                 alert(error.response.data.message);
                 this.$router.push({name: "login"});
                 console.log(error.response.data.message);
