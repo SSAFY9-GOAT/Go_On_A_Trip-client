@@ -179,6 +179,21 @@ const routes = [
                 name: 'notice',
                 component: () => import('@/components/notice/NoticeList.vue')
             },
+            {
+                path: "/write",
+                name: "noticewrite",
+                component: () => import('@/components/notice/NoticeWrite.vue')
+            },
+            {
+                path: ":noticeId",
+                name: "noticeview",
+                component: () => import('@/components/notice/NoticeView.vue')
+            },
+            {
+                path: ":noticeId/modify",
+                name: "noticemodify",
+                component: () => import('@/components/notice/NoticeModify.vue')
+            }
         ]
     }
 
