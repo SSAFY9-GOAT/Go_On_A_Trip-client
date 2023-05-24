@@ -7,7 +7,7 @@ export default {
 
 <template>
     <div class="wrapper text-white">
-        <h1>안녕하세요</h1>
+        <h1>떠나자, 낭만으로</h1>
     </div>
 </template>
 

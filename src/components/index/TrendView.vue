@@ -5,51 +5,51 @@
             <div class="row row-cols-1 row-cols-md-5 g-4 mt-3">
                 <div class="col">
                     <h3>10대 1위</h3>
-                    <div class="card h-100">
-                        <img :src="require(`@/assets/img/userUpload/${teenage.firstImage}`)" class="card-img-top" alt="...">
+                    <div class="card h-80">
+                        <img :src="require(`@/assets/img/userUpload/${teenage.firstImage}`)" class="card-img-top" alt="..." style="width: 100%; height: 200px; object-fit:cover;">
                         <div class="card-body">
                             <h5 class="card-title">{{ teenage.name }}</h5>
-                            <p class="card-text">{{ teenage.hit }}</p>
+                            <p class="card-text">인기도 : <b-icon icon="stars" aria-hidden="true" variant="warning"></b-icon>{{ teenage.hit }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <h3>20대 1위</h3>
-                    <div class="card h-100">
-                        <img :src="require(`@/assets/img/userUpload/${twenty.firstImage}`)" class="card-img-top" alt="...">
+                    <div class="card h-80">
+                        <img :src="require(`@/assets/img/userUpload/${twenty.firstImage}`)" class="card-img-top" alt="..." style="width: 100%; height: 200px; object-fit:cover;">
                         <div class="card-body">
                             <h5 class="card-title">{{ twenty.name }}</h5>
-                            <p class="card-text">{{ twenty.hit }}</p>
+                            <p class="card-text ">인기도 : <b-icon icon="stars" aria-hidden="true" variant="warning"></b-icon>{{ twenty.hit }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <h3>30대 1위</h3>
-                    <div class="card h-100">
-                        <img :src="require(`@/assets/img/userUpload/${thirty.firstImage}`)" class="card-img-top" alt="...">
+                    <div class="card h-80">
+                        <img :src="require(`@/assets/img/userUpload/${thirty.firstImage}`)" class="card-img-top" alt="..." style="width: 100%; height: 200px; object-fit:cover;">
                         <div class="card-body">
                             <h5 class="card-title">{{ thirty.name }}</h5>
-                            <p class="card-text">{{ thirty.hit }}</p>
+                            <p class="card-text">인기도 : <b-icon icon="stars" aria-hidden="true" variant="warning"></b-icon>{{ thirty.hit }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <h3>남성 1위</h3>
-                    <div class="card h-100">
-                        <img :src="require(`@/assets/img/userUpload/${male.firstImage}`)" class="card-img-top" alt="...">
+                    <div class="card h-80">
+                        <img :src="require(`@/assets/img/userUpload/${male.firstImage}`)" class="card-img-top" alt="..." style="width: 100%; height: 200px; object-fit:cover;">
                         <div class="card-body">
                             <h5 class="card-title">{{ male.name }}</h5>
-                            <p class="card-text">{{ male.hit }}</p>
+                            <p class="card-text">인기도 : <b-icon icon="stars" aria-hidden="true" variant="warning"></b-icon>{{ male.hit }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <h3>여성 1위</h3>
-                    <div class="card h-100">
-                        <img :src="require(`@/assets/img/userUpload/${female.firstImage}`)" class="card-img-top" alt="...">
+                    <div class="card h-80">
+                        <img :src="require(`@/assets/img/userUpload/${female.firstImage}`)" class="card-img-top" alt="..." style="width: 100%; height: 200px; object-fit:cover;">
                         <div class="card-body">
                             <h5 class="card-title">{{ female.name }}</h5>
-                            <p class="card-text">{{ female.hit }}</p>
+                            <p class="card-text">인기도 : <b-icon icon="stars" aria-hidden="true" variant="warning"></b-icon>{{ female.hit }}</p>
                         </div>
                     </div>
                 </div>
@@ -101,5 +101,9 @@ export default {
 <style scoped>
 #trend-container {
     background: white;
+}
+
+.card-text{
+    font-size: 17px;
 }
 </style>

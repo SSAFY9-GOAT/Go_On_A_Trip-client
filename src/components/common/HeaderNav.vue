@@ -29,7 +29,7 @@
                     </li>
                     <li class="nav-item">
                         <!--                        <router-link to="/logout" class="nav-link link-dark px-3">로그아웃</router-link>-->
-                        <span class="nav-link link-dark px-3" @click="onClickLogout">로그아웃</span>
+                        <button class="nav-link link-dark px-3" @click="onClickLogout">로그아웃</button>
                     </li>
                 </template>
                 <template v-else>
