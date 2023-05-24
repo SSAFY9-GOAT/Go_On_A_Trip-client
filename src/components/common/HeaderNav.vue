@@ -23,13 +23,13 @@
                 <li class="nav-item">
                   <router-link :to="{name: 'notice'}" class="nav-link px-3 link-dark">공지사항</router-link>
                 </li>
-                <template v-if="loginUser">
+                <template v-if="this.$store.state.memberStore.isLogin">
                     <li class="nav-item">
                         <router-link to="/mypage" class="nav-link link-dark px-3">마이페이지</router-link>
                     </li>
                     <li class="nav-item">
                         <!--                        <router-link to="/logout" class="nav-link link-dark px-3">로그아웃</router-link>-->
-                        <span class="nav-link link-dark px-3" @click.prevent="onClickLogout">로그아웃</span>
+                        <span class="nav-link link-dark px-3" @click="onClickLogout">로그아웃</span>
                     </li>
                 </template>
                 <template v-else>
@@ -77,7 +77,7 @@ export default {
     },
     methods: {
         ...mapActions(memberStore, ["userLogout"]),
-        onClickLogout() {
+        async onClickLogout() {
             // this.SET_IS_LOGIN(false);
             // this.SET_USER_INFO(null);
             // sessionStorage.removeItem("access-token");
@@ -86,10 +86,11 @@ export default {
             //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
             //+ satate에 isLogin, userInfo 정보 변경)
             // this.$store.dispatch("userLogout", this.userInfo.userid);
-            this.userLogout(this.loginUser.loginId);
+            await this.$store.dispatch("memberStore/userLogout",this.loginUser.loginId);
+            // await this.userLogout(this.loginUser.loginId);
             sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
             sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-            if (this.$route.path != "/") this.$router.push({name: "main"});
+            if (this.$route.path != "/") this.$router.push({name: "index"});
         },
     },
     created() {

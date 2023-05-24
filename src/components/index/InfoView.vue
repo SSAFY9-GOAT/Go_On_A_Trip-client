@@ -1,5 +1,5 @@
 <template>
-    <div class="carousel-inner mb-5">
+    <div class="carousel-inner ">
         <div class="carousel-item active">
             <img :src="require(`@/assets/img/logo/main.jpg`)" class="intro d-block w-100 h-25" alt="..."/>
             <div class="carousel-caption d-none d-md-block tongtong pt-5">
@@ -13,24 +13,26 @@
                 </h1>
             </div>
         </div>
+
     </div>
 </template>
 
 <script>
 export default {
     name: "InfoView",
+
     created() {
 
     },
-    methods:{
-
-    }
 }
 
 </script>
 
 
 <style scoped>
+.carousel-inner{
+    background: white;
+}
 .intro{
     height: 300px;
 }
