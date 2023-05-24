@@ -99,7 +99,7 @@ export default {
                 console.log("[핫플레이스] 쓰기 응답={}", res);
                 if(res.data>0){
                     alert("등록이 완료되었습니다.");
-                    this.$router.push("/articles/"+res.data);
+                    this.$router.push("/hotplaces/"+res.data);
                 }
             }).catch((err) => {
                 console.log(err);
