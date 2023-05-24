@@ -32,22 +32,31 @@
                 <img :src="require(`@/assets/img/userUpload/${hotplace.storeFileName}`)"
                      class="card-img-top"
                      alt="..." style="width: 100%; height: 300px; object-fit:cover;">
-                                <template v-if="hotplace.hotPlaceId in userLike">
-                                  <b-icon icon="hand-thumbs-up-fill" font-scale="3" variant="warning"
-                                          class="position-absolute mt-2 top-0 start-0"></b-icon>
-                                  <b-icon icon="hand-thumbs-up" font-scale="3" variant="white"
-                                          class="position-absolute mt-2 top-0 start-0"></b-icon>
-                                </template>
-                                <template v-else>
-                                  <b-icon icon="hand-thumbs-up-fill" font-scale="3" variant="black"
-                                          class="position-absolute mt-2 top-0 start-0"></b-icon>
-                                  <b-icon icon="hand-thumbs-up" font-scale="3" variant="white"
-                                          class="position-absolute mt-2 top-0 start-0"></b-icon>
-                                </template>
+                <template v-if="hotplace.hotPlaceId in userLike">
+                  <b-icon icon="hand-thumbs-up-fill" font-scale="3" variant="warning"
+                          class="position-absolute mt-2 top-0 start-0"></b-icon>
+                  <b-icon icon="hand-thumbs-up" font-scale="3" variant="white"
+                          class="position-absolute mt-2 top-0 start-0"></b-icon>
+                </template>
+                <template v-else>
+                  <b-icon icon="hand-thumbs-up-fill" font-scale="3" variant="black"
+                          class="position-absolute mt-2 top-0 start-0"></b-icon>
+                  <b-icon icon="hand-thumbs-up" font-scale="3" variant="white"
+                          class="position-absolute mt-2 top-0 start-0"></b-icon>
+                </template>
                 <div class="rating ">
-                  <input value="star-1" name="star-radio" id="star-1" type="checkbox"
-                         @click="likeIt(hotplace.hotPlaceId in userLike, hotplace.hotPlaceId )"
-                         :checked="hotplace.hotPlaceId in [3,4]">
+<!--                  <input-->
+<!--                      value="star-1" name="star-radio" id="star-1" type="checkbox"-->
+<!--                      @click="likeIt(hotplace.hotPlaceId in userLike, hotplace.hotPlaceId )"-->
+<!--                      :checked="hotplace.hotPlaceId in [3,4]">-->
+                  <input
+                      :value="hotplace.hotPlaceId"
+                      name="star-radio"
+                      :id="'star-' + hotplace.hotPlaceId"
+                      type="checkbox"
+                      :checked="isLiked(hotplace.hotPlaceId)"
+                      @click="likeIt(!isLiked(hotplace.hotPlaceId), hotplace.hotPlaceId)"
+                  >
                   <label for="star-1">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -65,7 +74,7 @@
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                   <router-link
-                      :to="{name: 'hotplace-detail', params: {hotPlaceId: 자}}"
+                      :to="{name: 'hotplace-detail', params: {hotPlaceId: hotplace.hotPlaceId}}"
                       type="button" class="btn btn-primary"
                   >더보기
                   </router-link>
@@ -133,7 +142,7 @@ export default {
     getUserLike() {
       if (!this.$store.state.memberStore.isLogin) {
         this.userLike = []
-      }else {
+      } else {
         const API_URL = `http://localhost:8080/hotplaces/getLike/${this.$store.state.memberStore.loginUser.id}`;
         console.log("[핫플레이스] 좋아요 목록 요청")
         axios({
@@ -152,9 +161,12 @@ export default {
         });
       }
     },
-    likeIt(result, hotplaceId) {
-      if (result) {
-        console.log("[핫플레이스] 좋아요 취소 요청")
+    isLiked(hotplaceId) {
+      return this.userLike.includes(hotplaceId);
+    },
+    likeIt(liked, hotplaceId) {
+      if (liked) {
+        console.log("[핫플레이스] 좋아요 취소 요청");
       } else {
         if (!this.$store.state.memberStore.isLogin) {
           alert("로그인 후 이용가능합니다.")
