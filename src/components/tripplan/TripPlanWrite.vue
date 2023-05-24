@@ -72,8 +72,9 @@
                 <!-- 관광지 정보 비동기 통신 -->
                 <div class="col">
                   <div v-for="attraction in attractionList" :key="attraction.id"
-                       class="card shadow-sm">
-                    <img :src=attraction.firstImage alt=""/>
+                       class="card shadow-sm mb-2">
+                    <img v-if='attraction.firstImage === ""' :src="require(`@/assets/img/no-img.jpg`)" alt=""/>
+                    <img v-else :src=attraction.firstImage alt=""/>
                     <div class="card-body">
                       <h5 class="card-title">{{ attraction.title }}</h5>
                       <h6 class="card-subtitle mb-2 text-muted">{{ attraction.addr1 }}</h6>

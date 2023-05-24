@@ -85,6 +85,8 @@ export default {
         });
 
         this.markers.push(marker);
+        if(!attractions[i].firstImage)
+          attractions[i].firstImage = require(`@/assets/img/no-img.jpg`);
 
         let content = '<div class="wrap">' +
             '    <div class="info">' +

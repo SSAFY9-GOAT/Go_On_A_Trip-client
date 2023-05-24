@@ -70,7 +70,8 @@
               <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3" id="tour-list">
                 <div class="col">
                   <div v-for="attraction in attractions" :key="attraction.id" class="card shadow-sm mb-2">
-                    <img :src=attraction.firstImage alt=""/>
+                      <img v-if='attraction.firstImage === ""' :src="require(`@/assets/img/no-img.jpg`)" alt=""/>
+                      <img v-else :src=attraction.firstImage alt=""/>
                     <div class="card-body">
                       <h5 class="card-title">{{ attraction.title }}</h5>
                       <h6 class="card-subtitle mb-2 text-muted">{{ attraction.addr1 }}</h6>
