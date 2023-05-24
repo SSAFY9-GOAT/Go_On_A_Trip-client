@@ -45,7 +45,15 @@ const routes = [
     {
         path: '/attraction',
         name: 'attraction',
-        component: () => import(/* webpackChunkName: "attraction" */ '@/views/AppAttraction.vue')
+        component: () => import(/* webpackChunkName: "attraction" */ '@/views/AppAttraction.vue'),
+        redirect: '/attraction',
+        children: [
+            {
+                path: '',
+                name: 'attractiondisplay',
+                component: () => import('@/components/attraction/AttractionDisplay.vue'),
+            }
+        ]
     },
     {
         path: '/articles',
