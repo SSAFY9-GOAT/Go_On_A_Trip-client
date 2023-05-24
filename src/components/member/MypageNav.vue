@@ -47,6 +47,7 @@
           <!--                      내가 좋아요 누른 핫플레이스-->
           <!--                      </a>-->
           <!--                  </li>-->
+          <template v-if="!this.$store.state.memberStore.loginUser.snsUser">
           <li class="nav-item mt-5">
             <router-link to="/mypage/modifyPw" v-if="this.$store.state.myPageState === 'modifyPw'"
                          class="nav-link active" aria-current="page">
@@ -79,6 +80,16 @@
               회원탈퇴
             </router-link>
           </li>
+          </template>
+          <template v-if="this.$store.state.memberStore.loginUser.snsUser" >
+            <li class="nav-item">
+              <div to="/mypage/modify"  class="nav-link " aria-current="page">
+                <span data-feather="home" class="align-text-bottom"></span>
+                <i class="bi bi-person"></i>
+                네이버 로그인유저는 <br>정보변경이 <br>지원되지 않습니다.
+              </div>
+            </li>
+          </template>
         </ul>
       </div>
     </nav>
