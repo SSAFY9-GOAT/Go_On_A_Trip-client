@@ -1,5 +1,5 @@
 <template>
-    <div id="trend-container" class="mt-5">
+    <div id="trend-container" class="pb-5 ">
         <div class="container px-4 py-5 text-center" id="featured-3">
             <h2>실시간<br/><strong>인기있는 여행지</strong></h2>
             <div class="row row-cols-1 row-cols-md-5 g-4 mt-3">
@@ -100,5 +100,6 @@ export default {
 
 <style scoped>
 #trend-container {
+    background: white;
 }
 </style>
