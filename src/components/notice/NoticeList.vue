@@ -40,9 +40,12 @@
                     :total-pages="totalPages"
                     @update-page="updatePage"
                 ></Pagination>
+              <div v-if="$store.state.memberStore.loginUser">
                 <div v-if="$store.state.memberStore.loginUser.authority === 'ADMIN'" class='wrapper m-auto mt-5'>
-                    <button type='button' @click="moveWrite" class='btn btn-success'>공지등록</button>
+                  <button type='button' @click="moveWrite" class='btn btn-success'>공지등록</button>
                 </div>
+              </div>
+
             </div>
         </main>
     </div>
