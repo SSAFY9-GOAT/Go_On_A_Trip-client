@@ -22,7 +22,7 @@
                               aria-describedby="basic-addon3"
                               aria-label="With textarea" rows='20' placeholder="내용을 입력하세요"></textarea>
                             </div>
-                            <div class="form-check">
+                            <div class="form-check" style="text-align: left">
                                 <input class="form-check-input" type="checkbox" v-model="top" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     상단 고정

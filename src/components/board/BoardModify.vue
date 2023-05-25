@@ -51,8 +51,14 @@ export default {
     created() {
         let articleId = this.$route.params.articleId;
         const API_URL = `http://localhost:8080/articles/${articleId}/modify`;
-        axios.get(API_URL)
-            .then(response => {
+        axios({
+            url: API_URL,
+            method: "GET",
+            headers: {
+                Authorization: sessionStorage.getItem("access-token"),
+                'access-token': sessionStorage.getItem("access-token"),
+            },
+        }).then(response => {
                 console.log(response.data);
                 this.article = response.data.data;
             })

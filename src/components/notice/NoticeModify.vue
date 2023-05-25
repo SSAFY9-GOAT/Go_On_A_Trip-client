@@ -51,14 +51,19 @@ export default {
     created() {
         let noticeId = this.$route.params.noticeId;
         const API_URL = `http://localhost:8080/notice/${noticeId}`;
-        axios.get(API_URL)
-            .then(response => {
-                console.log(response.data);
-                this.notice = response.data.data;
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        axios({
+            url: API_URL,
+            method: "GET",
+            headers: {
+                Authorization: sessionStorage.getItem("access-token"),
+                'access-token': sessionStorage.getItem("access-token"),
+            },
+        }).then(response => {
+            console.log(response.data);
+            this.notice = response.data.data;
+        }).catch(error => {
+            console.log(error);
+        })
     },
     methods: {
         modify() {
