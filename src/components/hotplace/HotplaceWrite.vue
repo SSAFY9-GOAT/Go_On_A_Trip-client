@@ -76,6 +76,10 @@ export default {
             lon: 0,
         };
     },
+  mounted() {
+    const today = new Date().toISOString().substr(0, 10);
+    this.visitedDate = today;
+  },
     methods: {
         write() {
             let frm = new FormData();
