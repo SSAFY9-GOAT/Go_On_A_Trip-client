@@ -1,6 +1,11 @@
 <template>
     <div class="p-3 mb-3 border-bottom container-sm">
-        핫플레이스 리스트
+        <div class="p-4 p-md-5 mb-4 text-secondary rounded bg-white shadow">
+            <div class="col-md-6 px-0">
+                <h1 class="display-5 fst-italic">핫플 인증</h1>
+                <p class="lead my-3">방문했던 핫플레이스를 자랑하세요!</p>
+            </div>
+        </div>
         <div class="container-sm">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <div class="row g-3" method="get" action="${root}/hotPlace/list">
