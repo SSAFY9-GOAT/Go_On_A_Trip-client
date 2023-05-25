@@ -28,6 +28,14 @@
         <iframe v-else width="720" height="405"
                 src="https://www.youtube.com/embed/GvxfWPJaTdA?autoplay=1&mute=1&controls=0&loop=1&playlist=GvxfWPJaTdA"></iframe>
 
+        <br>
+        <br>
+        <br><br><br><br><br>
+
+        <h1>세상의 아름다움을 사람들과 함께 나누세요</h1>
+        <h1> 여행으로 세상을 만나다</h1>
+        <br>
+        <h5>자연 속으로, 여행의 모험을 떠나보세요 </h5>
     </div>
 </template>
 
@@ -55,6 +63,6 @@ export default {
 <style scoped>
 .wrapper {
     background: white;
-    height: 700px;
+    //height: 700px;
 }
 </style>

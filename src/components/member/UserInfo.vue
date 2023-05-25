@@ -18,7 +18,7 @@
               <label for="userId" class="form-label">아이디</label>
               <div class="input-group ">
                 <template v-if="this.$store.state.memberStore.loginUser.snsUser">
-                  <input type="text" class="form-control"
+                  <input type="text" class="form-control border-success"
                          id="userId" name="userId"
                          placeholder="네이버 로그인 이용자"
                          disabled>
