@@ -8,36 +8,35 @@
 
             <ul class="nav nav-pills col">
                 <li class="nav-item">
-                    <router-link :to="{name: 'attraction'}" class="nav-link px-3 link-dark">관광지조회</router-link>
+                    <router-link :to="{name: 'attraction'}" class="button nav-link px-3 link-dark">관광지조회</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link :to="{name: 'articles'}" class="nav-link px-3 link-dark">자유게시판</router-link>
+                    <router-link :to="{name: 'articles'}" class="button nav-link px-3 link-dark">자유게시판</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link :to="{name: 'hotplaces'}" class="nav-link px-3 link-dark">핫플레이스</router-link>
+                    <router-link :to="{name: 'hotplaces'}" class="button nav-link px-3 link-dark">핫플레이스</router-link>
                 </li>
                 <li class="nav-item">
-                    <!--                    <a href="${root}/tripPlan/list" class="nav-link px-3 link-dark">여행계획</a>-->
-                    <router-link :to="{name: 'tripplan'}" class="nav-link px-3 link-dark">여행계획</router-link>
+                    <router-link :to="{name: 'tripplan'}" class="button nav-link px-3 link-dark">여행계획</router-link>
                 </li>
                 <li class="nav-item">
-                  <router-link :to="{name: 'notice'}" class="nav-link px-3 link-dark">공지사항</router-link>
+                    <router-link :to="{name: 'notice'}" class="button nav-link px-3 link-dark">공지사항</router-link>
                 </li>
                 <template v-if="this.$store.state.memberStore.isLogin">
                     <li class="nav-item">
-                        <router-link to="/mypage" class="nav-link link-dark px-3">마이페이지</router-link>
+                        <router-link to="/mypage" class="button nav-link link-dark px-3">마이페이지</router-link>
                     </li>
                     <li class="nav-item">
                         <!--                        <router-link to="/logout" class="nav-link link-dark px-3">로그아웃</router-link>-->
-                        <button class="nav-link link-dark px-3" @click="onClickLogout">로그아웃</button>
+                        <button class="button nav-link link-dark px-3" @click="onClickLogout">로그아웃</button>
                     </li>
                 </template>
                 <template v-else>
                     <li class="nav-item col">
-                        <router-link to="/login" class="nav-link link-dark px-3">로그인</router-link>
+                        <router-link to="/login" class="button nav-link link-dark px-3">로그인</router-link>
                     </li>
                     <li class="nav-item col">
-                        <router-link to="/regist" class="nav-link link-dark px-3">회원가입</router-link>
+                        <router-link to="/regist" class="button nav-link link-dark px-3">회원가입</router-link>
                     </li>
                 </template>
             </ul>
@@ -86,7 +85,7 @@ export default {
             //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
             //+ satate에 isLogin, userInfo 정보 변경)
             // this.$store.dispatch("userLogout", this.userInfo.userid);
-            await this.$store.dispatch("memberStore/userLogout",this.loginUser.loginId);
+            await this.$store.dispatch("memberStore/userLogout", this.loginUser.loginId);
             // await this.userLogout(this.loginUser.loginId);
             sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
             sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
