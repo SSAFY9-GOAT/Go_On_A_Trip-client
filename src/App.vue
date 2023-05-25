@@ -41,8 +41,9 @@ export default {
                 console.log(res.data);
                 if (res.data) {
                     //회원가입 완료
-                    console.log("회원가입 성공");
-                    this.$router.push('/');
+                    console.log("회원가입 성공")
+                  alert("가입을 축하합니다.")
+                    this.$router.push('/login');
                 }
             }).catch((err) => {
                 console.log(err);
