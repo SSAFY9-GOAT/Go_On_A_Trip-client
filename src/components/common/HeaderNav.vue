@@ -7,36 +7,53 @@
             </router-link>
 
             <ul class="nav nav-pills col">
-                <li class="nav-item">
+                <li class="nav-item cta">
+                  <span class="hover-underline-animation">
                     <router-link :to="{name: 'attraction'}" class="button nav-link px-3 link-dark">관광지조회</router-link>
+                    </span>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item cta">
+                  <span class="hover-underline-animation">
                     <router-link :to="{name: 'articles'}" class="button nav-link px-3 link-dark">자유게시판</router-link>
+                    </span>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item cta">
+                  <span class="hover-underline-animation">
                     <router-link :to="{name: 'hotplaces'}" class="button nav-link px-3 link-dark">핫플레이스</router-link>
+                    </span>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item cta">
+                  <span class="hover-underline-animation">
                     <router-link :to="{name: 'tripplan'}" class="button nav-link px-3 link-dark">여행계획</router-link>
+                    </span>
                 </li>
-                <li class="nav-item">
-                    <router-link :to="{name: 'notice'}" class="button nav-link px-3 link-dark">공지사항</router-link>
+                <li class="nav-item cta">
+
+                  <router-link :to="{name: 'notice'}" class="button nav-link px-3 link-dark"><span class="hover-underline-animation">공지사항</span></router-link>
                 </li>
                 <template v-if="this.$store.state.memberStore.isLogin">
-                    <li class="nav-item">
+                    <li class="nav-item cta">
+                      <span class="hover-underline-animation">
                         <router-link to="/mypage" class="button nav-link link-dark px-3">마이페이지</router-link>
+                        </span>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item cta">
+                      <span class="hover-underline-animation">
                         <!--                        <router-link to="/logout" class="nav-link link-dark px-3">로그아웃</router-link>-->
                         <button class="button nav-link link-dark px-3" @click="onClickLogout">로그아웃</button>
+                        </span>
                     </li>
                 </template>
                 <template v-else>
-                    <li class="nav-item col">
+                    <li class="nav-item cta col">
+                      <span class="hover-underline-animation">
                         <router-link to="/login" class="button nav-link link-dark px-3">로그인</router-link>
+                        </span>
                     </li>
-                    <li class="nav-item col">
+                    <li class="nav-item cta col">
+                      <span class="hover-underline-animation">
                         <router-link to="/regist" class="button nav-link link-dark px-3">회원가입</router-link>
+                      </span>
                     </li>
                 </template>
             </ul>
@@ -113,5 +130,44 @@ export default {
     font-size: larger;
 }
 
+.button {
+  font-size: 18px;
+  color: #92af67;
+  font-family: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: color;
+}
+
+.button:focus,
+.button:hover {
+  color: #92af67;
+}
+
+.button:focus:after,
+.button:hover:after {
+  width: 100%;
+  left: 0%;
+}
+
+.button:after {
+  content: "";
+  pointer-events: none;
+  bottom: -2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: #92af67;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}
 
 </style>
