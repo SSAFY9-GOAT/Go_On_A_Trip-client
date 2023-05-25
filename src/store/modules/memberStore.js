@@ -52,8 +52,6 @@ const memberStore = {
                         commit("SET_IS_LOGIN", false);
                         commit("SET_IS_LOGIN_ERROR", true);
                         commit("SET_IS_VALID_TOKEN", false);
-                        //todo: 이거 꾸미기 '아이디 혹은 비밀번호를 확인해주세요'
-                        // alert(data.result)
                         return data.result;
                     }
                 },
