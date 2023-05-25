@@ -1,5 +1,11 @@
 <template>
-    <div>핫플레이스 상세조회
+    <div>
+        <div class="p-4 p-md-5 mb-4 text-secondary rounded bg-white shadow">
+            <div class="col-md-6 px-0">
+                <h1 class="display-5 fst-italic">핫플 인증</h1>
+                <p class="lead my-3">방문했던 핫플레이스를 자랑하세요!</p>
+            </div>
+        </div>
         <main class="container">
             <!-- start album -->
 
