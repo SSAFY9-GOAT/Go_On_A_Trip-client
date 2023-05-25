@@ -38,7 +38,7 @@
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
                         <button class="btn btn-primary me-md-2" type="button" @click="write">글쓰기</button>
-                        <button class="btn btn-secondary" type="button">목록</button>
+                        <router-link :to="{name:'hotplaces'}" class="btn btn-secondary" type="button">목록</router-link>
                     </div>
                 </form>
             </div>
