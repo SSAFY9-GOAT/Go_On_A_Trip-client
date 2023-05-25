@@ -16,7 +16,7 @@
         <iframe v-else-if="num===3" width="720" height="405"
                 src="https://www.youtube.com/embed/fNbwEdwYUdY?autoplay=1&mute=1&controls=0&loop=1&playlist=fNbwEdwYUdY"></iframe>
         <iframe v-else-if="num===4" width="720" height="405"
-                src="https://www.youtube.com/embed/HOCfCWJyT78?autoplay=1&mute=1&controls=0&loop=1&playlist=HOCfCWJyT78"></iframe>
+                src="https://www.youtube.com/embed/rW_nDSsH72Q?autoplay=1&mute=1&controls=0&loop=1&playlist=rW_nDSsH72Q"></iframe>
         <iframe v-else-if="num===5" width="720" height="405"
                 src="https://www.youtube.com/embed/dqkfpKJw348?autoplay=1&mute=1&controls=0&loop=1&playlist=dqkfpKJw348"></iframe>
         <iframe v-else-if="num===6" width="720" height="405"
