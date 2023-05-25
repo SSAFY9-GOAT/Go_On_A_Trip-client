@@ -190,16 +190,19 @@ const routes = [
             {
                 path: "/write",
                 name: "noticewrite",
+                beforeEnter: onlyAuthUser,
                 component: () => import('@/components/notice/NoticeWrite.vue')
             },
             {
                 path: ":noticeId",
                 name: "noticeview",
+                beforeEnter: onlyAuthUser,
                 component: () => import('@/components/notice/NoticeView.vue')
             },
             {
                 path: ":noticeId/modify",
                 name: "noticemodify",
+                beforeEnter: onlyAuthUser,
                 component: () => import('@/components/notice/NoticeModify.vue')
             }
         ]

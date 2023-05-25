@@ -16,12 +16,14 @@
                 </div>
             </div>
             <hr>
+            <div v-if="$store.state.memberStore.loginUser">
             <div v-if="$store.state.memberStore.loginUser.authority === 'ADMIN'" class='notion-footer mt-5 '>
                 <router-link :to="{name: 'noticemodify', params: {noticeId: notice.id}}"
                              class='btn btn-outline-success'>수정하기
                 </router-link>
                 <button type="button" class='btn btn-outline-danger' @click="deleted">삭제하기</button>
             </div>
+                </div>
 
             <div class='m-auto container-sm justify-content-center align-content-center'>
                 <div class='row justify-content-end'>
